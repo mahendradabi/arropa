@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Arropa</string>
+    <string name="open">OPne</string>
+    <string name="close">Close</string>
+
+    <string-array name="options">
+        <item>Shirts</item>
+        <item>Jeans</item>
+        <item>T-shirts</item>
+        <item>Other</item>
+    </string-array>
+
+  
+</resources>
