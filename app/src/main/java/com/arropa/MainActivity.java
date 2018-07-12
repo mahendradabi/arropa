@@ -52,9 +52,8 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         tabs = findViewById(R.id.tabs);
         viewpager = findViewById(R.id.viewpager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentProductList(), "Mens");
-        adapter.addFragment(new FragmentProductList(), "Womens");
-        adapter.addFragment(new FragmentProductList(), "Kids");
+        adapter.addFragment(new FragmentProductList(), "Shirt");
+        adapter.addFragment(new FragmentProductList(), "T-Shirt");
 
         tabs.addOnTabSelectedListener(MainActivity.this);
         viewpager.setPageTransformer(false, new CustPagerTransformer(MainActivity.this));
