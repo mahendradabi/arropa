@@ -27,6 +27,7 @@
             android:background="@color/white"
             app:tabGravity="fill"
             app:tabMode="fixed"
+            android:textAppearance="@style/TextAppearance.FontPath"
             app:tabIndicatorColor="@color/black"
             app:tabSelectedTextColor="@color/black"
             app:tabTextColor="@color/black" />

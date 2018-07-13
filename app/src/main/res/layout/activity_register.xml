@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+   android:paddingTop="20dp"
     android:focusable="false"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -20,171 +21,126 @@
             android:focusable="false"
             android:focusableInTouchMode="true"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatTextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Register"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="5dp">
 
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Register"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-            <android.support.design.widget.TextInputLayout
-                android:textColorHint="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <EditText
+                    style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter  Name"
-                    android:textSize="14sp"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:textColorHint="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <EditText
-                    android:textSize="14sp"
+                    style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter shop name"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:textColorHint="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <EditText
-                    android:textSize="14sp"
+                    style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Adhaar card no."
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:textColorHint="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <EditText
-                    android:textSize="14sp"
+                    style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Shop Address"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:textColorHint="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <EditText
-                    android:textSize="14sp"
+                    style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Residential address"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:textColorHint="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <EditText
-                    android:textSize="14sp"
+                    style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="City"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:textColorHint="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <EditText
-                    android:textSize="14sp"
+                    style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="State"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:textColorHint="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <EditText
-                    android:textSize="14sp"
+                    style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Pincode"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:textColorHint="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
 
                 <EditText
-                    android:textSize="14sp"
+                    style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Password"
-                    android:inputType="textPassword" />
-            </android.support.design.widget.TextInputLayout>
+                    android:inputType="textPassword"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/creataccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_back_solid"
+                    android:text="Create Account"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvSingIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:text="have an account? Login"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
 
 
-            <Button
-                android:id="@+id/creataccount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/btn_back_solid"
-                android:text="Create Account"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:padding="15dp"
-                android:text="have an account? Login"
-                android:textColor="@color/white" />
 
         </LinearLayout>
     </ScrollView>

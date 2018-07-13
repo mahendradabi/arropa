@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,53 +14,94 @@
         android:focusableInTouchMode="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="20dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:src="@drawable/logo" />
 
-        <android.support.design.widget.TextInputLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/email"
-                android:textSize="14sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_person_black_24dp"
-                android:hint="Enter Email "
-                android:inputType="textEmailAddress" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:textSize="14sp"
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_lock_black_24dp"
-                android:hint="Enter Password"
-                android:inputType="textPassword" />
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/btn_back_solid"
-            android:text="Login"
-            android:textColor="@color/white" />
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Welcome, we are waiting to work with you."
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            />
+
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:id="@+id/email"
+            style="@style/mEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_person_black_24dp"
+            android:hint="Enter Email "
+            android:inputType="textEmailAddress"
+            android:textSize="14sp" />
+
+
+        <EditText
+            android:id="@+id/password"
+            style="@style/mEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_lock_black_24dp"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="left"
+                android:background="@drawable/btn_back_solid"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:text="Login"
+                android:textColor="@color/white" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="5dp"
+                android:text="Forgot password"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By Signing in, I agree to "
+                android:textColor="@color/white" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:text="Terms &amp; Conditons"
+                android:textColor="@color/white" />
+        </LinearLayout>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/register"
@@ -69,9 +110,12 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="Register"
+            android:textColor="@color/white"
             android:textSize="14sp"
-            android:textColor="@color/black" />
+            android:visibility="visible" />
 
 
     </LinearLayout>
+
+
 </LinearLayout>

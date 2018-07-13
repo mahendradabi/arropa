@@ -1,7 +1,10 @@
 package com.arropa;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 /**
@@ -13,6 +16,12 @@ public class BaseActivity extends AppCompatActivity {
     * set the default toolbar with back button
     *
     * */
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
     public void setToolbar(android.support.v7.widget.Toolbar toolbar) {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

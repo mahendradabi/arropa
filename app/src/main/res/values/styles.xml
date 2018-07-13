@@ -11,7 +11,7 @@
     </style>
 
 
-     <style name="mEditText">
+    <style name="mEditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/border_edittext</item>
@@ -22,8 +22,6 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@android:color/darker_gray</item>
     </style>
-
-
 
     <style name="addToCart">
         <item name="android:layout_height">30dp</item>
@@ -52,6 +50,11 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.FontPath" parent="android:TextAppearance">
+        <!-- Custom Attr-->
+        <item name="fontPath">fonts/RobotoCondensed-Regular.ttf</item>
     </style>
 
 </resources>
