@@ -7,9 +7,9 @@ package com.arropa.servers;
 public final class Constant implements ServerCode {
 
     //host url domain name
-    public static final String HOST_URL = "http://hpsoftech.in/";
+    public static final String HOST_URL = "http://disharajsociety.com/";
 
     //api sub segment
-    public static final String PATH = "rc/";
+    public static final String PATH = "arropa/";
 
 }
