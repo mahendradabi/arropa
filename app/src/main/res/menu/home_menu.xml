@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
     <item
+        android:id="@+id/app_bar_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView" />
+    <item android:title="filter"
         android:id="@+id/filter"
-        android:icon="@drawable/filter"
-        android:title="filter"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:icon="@drawable/filter"/>
     <item
         android:id="@+id/cart"
+        android:actionLayout="@layout/cart_count"
         android:icon="@drawable/ic_shopping_cart_black_24dp"
-        android:title="Cart"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:title="Cart">
+    </item>
+
 </menu>
