@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
         <item android:title="Home" android:checked="true"/>
         <item android:title="Orders" />
-        <item android:title="Credit Limits" />
+        <item android:title="Credit Limits"
+            android:id="@+id/creditLimit"
+            app:actionViewClass="android.widget.TextView"/>
         <item android:title="FAQ" />
         <item android:title="Returns"/>
         <item android:title="Contact Us"/>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.arropa.adapters.ViewPagerAdapter;
 import com.arropa.customviews.CustPagerTransformer;
@@ -32,6 +34,8 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
     ViewPager viewpager;
 
     PreferenceManger preferenceManger;
+
+    TextView tvCreditLimt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +66,20 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
         navigationView.setNavigationItemSelectedListener(this);
 
+      tvCreditLimt= (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+                findItem(R.id.creditLimit));
 
+      if (tvCreditLimt!=null)
+          tvCreditLimt.setText("100000");
 
         if (preferenceManger!=null)
         userName.setText(preferenceManger.getString(PrefKeys.USERNAME));
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentProductList(), "Shirt");
-        adapter.addFragment(new FragmentProductList(), "T-Shirt");
+        adapter.addFragment(FragmentProductList.intantiateList("product_shirt"), "Shirt");
+        adapter.addFragment(FragmentProductList.intantiateList("product_tshirt"), "T-Shirt");
+        adapter.addFragment(FragmentProductList.intantiateList("product_bottom"), "Bottom Wear");
+        adapter.addFragment(FragmentProductList.intantiateList("product_seasonal"), "Seasonal Wear");
 
         tabs.addOnTabSelectedListener(MainActivity.this);
         viewpager.setPageTransformer(false, new CustPagerTransformer(MainActivity.this));

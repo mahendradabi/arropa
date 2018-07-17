@@ -30,7 +30,7 @@
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/post_title"
+                android:id="@+id/tvname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" Denim Shirt"
@@ -39,6 +39,7 @@
 
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -48,6 +49,7 @@
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"

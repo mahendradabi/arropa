@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:tabGravity="fill"
-            app:tabMode="fixed"
+            app:tabMode="scrollable"
             android:textAppearance="@style/TextAppearance.FontPath"
             app:tabIndicatorColor="@color/black"
             app:tabSelectedTextColor="@color/black"

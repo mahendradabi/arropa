@@ -12,4 +12,6 @@ public final class Constant implements ServerCode {
     //api sub segment
     public static final String PATH = "web/home/";
 
+    public static final String CURRENCY="\u20b9";
+
 }

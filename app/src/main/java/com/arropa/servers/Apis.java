@@ -7,11 +7,14 @@ package com.arropa.servers;
 import com.arropa.models.LoginModel;
 import com.arropa.models.LoginUserDetails;
 import com.arropa.models.MyResponse;
+import com.arropa.models.ProductList;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Url;
 
 public interface Apis {
 
@@ -34,4 +37,7 @@ public interface Apis {
     @POST(Constant.PATH+"u_signin")
     Call<LoginModel> login(@Field("venderemail") String venderemail,
                            @Field("password") String password);
+
+    @GET
+    Call<ProductList> getProductList(@Url String url);
 }
