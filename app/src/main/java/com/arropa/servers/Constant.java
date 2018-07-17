@@ -10,6 +10,6 @@ public final class Constant implements ServerCode {
     public static final String HOST_URL = "http://disharajsociety.com/";
 
     //api sub segment
-    public static final String PATH = "arropa/";
+    public static final String PATH = "web/home/";
 
 }

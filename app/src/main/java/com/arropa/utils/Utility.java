@@ -3,6 +3,7 @@ package com.arropa.utils;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 public class Utility {
 
@@ -14,5 +15,10 @@ public class Utility {
         ComponentName componentName = sendIntent.resolveActivity(mContex.getPackageManager());
         if (componentName != null)
             mContex.startActivity(sendIntent);
+    }
+
+    public static void showToast(Context mContex,String msg)
+    {
+        Toast.makeText(mContex,msg,Toast.LENGTH_SHORT).show();
     }
 }

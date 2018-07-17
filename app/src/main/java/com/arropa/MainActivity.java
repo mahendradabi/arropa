@@ -2,15 +2,15 @@ package com.arropa;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,12 +18,20 @@ import android.view.View;
 
 import com.arropa.adapters.ViewPagerAdapter;
 import com.arropa.customviews.CustPagerTransformer;
+import com.arropa.sharedpreference.PrefKeys;
+import com.arropa.sharedpreference.PreferenceManger;
 
-public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabSelectedListener {
+public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabSelectedListener, NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout mDrawerLayout;
+
     NavigationView navigationView;
+
     TabLayout tabs;
+
+
     ViewPager viewpager;
+
+    PreferenceManger preferenceManger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +52,21 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         toggle.syncState();
         mDrawerLayout.addDrawerListener(toggle);
 
-        navigationView = findViewById(R.id.navigation);
+        preferenceManger = PreferenceManger.getPreferenceManger();
+        navigationView=findViewById(R.id.navigation);
+        tabs=findViewById(R.id.tabs);
+        viewpager=findViewById(R.id.viewpager);
 
         View view = navigationView.getHeaderView(0);
+        AppCompatTextView userName = view.findViewById(R.id.username);
+
+        navigationView.setNavigationItemSelectedListener(this);
 
 
-        tabs = findViewById(R.id.tabs);
-        viewpager = findViewById(R.id.viewpager);
+
+        if (preferenceManger!=null)
+        userName.setText(preferenceManger.getString(PrefKeys.USERNAME));
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentProductList(), "Shirt");
         adapter.addFragment(new FragmentProductList(), "T-Shirt");
@@ -106,6 +122,20 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
             case R.id.cart:
                 startActivity(new Intent(MainActivity.this, ActivityCart.class));
+                break;
+        }
+        return true;
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.signout:
+                PreferenceManger.getPreferenceManger().clearSession();
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                finish();
                 break;
         }
         return true;

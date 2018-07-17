@@ -8,7 +8,7 @@
         <item android:title="Returns"/>
         <item android:title="Contact Us"/>
         <item android:title="Terms &amp; Conditions"/>
-        <item android:title="Signout"/>
+        <item android:id="@+id/signout" android:title="Signout"/>
 
 
     </group>

@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:clickable="true"
+    tools:openDrawer="start"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -46,7 +47,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header"
-        app:itemBackground="@android:color/transparent"
         app:menu="@menu/drawer_menu"
         design:itemIconTint="@drawable/navigation_selector"
         design:itemTextColor="@drawable/navigation_selector" />

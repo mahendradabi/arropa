@@ -35,22 +35,20 @@
 
         <EditText
             android:layout_marginTop="20dp"
-            android:id="@+id/email"
+            android:id="@+id/etEmail"
             style="@style/mEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_person_black_24dp"
             android:hint="Enter Email "
             android:inputType="textEmailAddress"
             android:textSize="14sp" />
 
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/etPassword"
             style="@style/mEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_lock_black_24dp"
             android:hint="Enter Password"
             android:inputType="textPassword"
             android:textSize="14sp" />
@@ -72,6 +70,7 @@
                 android:textColor="@color/white" />
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvForgotPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

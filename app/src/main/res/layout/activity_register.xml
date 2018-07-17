@@ -40,6 +40,7 @@
 
 
                 <EditText
+                    android:id="@+id/etName"
                     style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -47,8 +48,27 @@
                     android:inputType="text"
                     android:textSize="14sp" />
 
+                <EditText
+                    android:id="@+id/etEmail"
+                    style="@style/mEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Email"
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp" />
 
                 <EditText
+                    android:id="@+id/etMobile"
+                    style="@style/mEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Mobile"
+                    android:inputType="phone"
+                    android:textSize="14sp" />
+
+
+                <EditText
+                    android:id="@+id/etShopName"
                     style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -58,15 +78,17 @@
 
 
                 <EditText
+                    android:id="@+id/etCarNo"
                     style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Adhaar card no."
-                    android:inputType="text"
+                    android:inputType="number"
                     android:textSize="14sp" />
 
 
                 <EditText
+                    android:id="@+id/etShopAddress"
                     style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,6 +98,7 @@
 
 
                 <EditText
+                    android:id="@+id/etResAddress"
                     style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -85,6 +108,7 @@
 
 
                 <EditText
+                    android:id="@+id/etCity"
                     style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,6 +118,7 @@
 
 
                 <EditText
+                    android:id="@+id/etState"
                     style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,6 +128,7 @@
 
 
                 <EditText
+                    android:id="@+id/etPincode"
                     style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -112,6 +138,7 @@
 
 
                 <EditText
+                    android:id="@+id/etPassword"
                     style="@style/mEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

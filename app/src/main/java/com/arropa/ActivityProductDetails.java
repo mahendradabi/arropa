@@ -27,12 +27,12 @@ public class ActivityProductDetails extends MyAbstractActivity {
         setTitle("Details");
         showBackButton();
 
-        tvShare.setOnClickListener(new View.OnClickListener() {
+    /*    tvShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.openShareIntent(ActivityProductDetails.this, "Test message to share ");
             }
-        });
+        });*/
     }
 
     @Override

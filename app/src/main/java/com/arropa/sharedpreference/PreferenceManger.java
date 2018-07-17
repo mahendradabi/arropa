@@ -41,6 +41,11 @@ public final class PreferenceManger  {
         sharedPreferences.edit().clear().commit();
     }
 
+    public void clearSession()
+    {
+        sharedPreferences.edit().clear().commit();
+    }
+
 
 
 }
