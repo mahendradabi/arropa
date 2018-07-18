@@ -15,7 +15,7 @@ public class MyApplication extends Application {
         // initalize Calligraphy
         CalligraphyConfig.initDefault(
                 new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/RobotoCondensed-Regular.ttf")
+                        .setDefaultFontPath("fonts/DroidSans.ttf")
                         .setFontAttrId(R.attr.fontPath)
                         .build()
         );

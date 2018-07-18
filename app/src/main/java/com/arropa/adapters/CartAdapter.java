@@ -1,7 +1,6 @@
 package com.arropa.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.arropa.ActivityProductDetails;
 import com.arropa.R;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
@@ -45,4 +43,5 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
            // ll_item = itemView.findViewById(R.id.ll_item);
         }
     }
+
 }

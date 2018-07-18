@@ -48,7 +48,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header"
         app:menu="@menu/drawer_menu"
-        design:itemIconTint="@drawable/navigation_selector"
+        design:itemIconTint="@drawable/navigation_icon_selector"
         design:itemTextColor="@drawable/navigation_selector" />
 
 </android.support.v4.widget.DrawerLayout>

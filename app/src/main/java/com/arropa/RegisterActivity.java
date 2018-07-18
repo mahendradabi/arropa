@@ -69,10 +69,7 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (PreferenceManger.getPreferenceManger().getString(PrefKeys.EMAIL) != null) {
-            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-            finish();
-        }
+
 
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
@@ -90,7 +87,13 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
             @Override
             public void onClick(View v) {
                 if (isValidate()) {
-                    if (Validator.isEmailValid(etEmail.getText().toString())) {
+                    if (!Validator.isEmailValid(etEmail.getText().toString())) {
+                        etEmail.setError("enter valid email address");
+                        etEmail.requestFocus();
+                    } else if (etAddharCardno.length() != 13) {
+                        etAddharCardno.setError("Enter 13 digit addhar number");
+                        etAddharCardno.requestFocus();
+                    } else {
                         progressDialog.show();
                         new Requestor(Constant.REGISTER_CODE, RegisterActivity.this)
                                 .userRegister(etName.getText().toString(),
@@ -99,9 +102,6 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
                                         etResAddress.getText().toString(), etCity.getText().toString(),
                                         etState.getText().toString(), etPincode.getText().toString(), etPassword.getText().toString(),
                                         etMobile.getText().toString());
-                    } else {
-                        etEmail.setError("enter valid email address");
-                        etEmail.requestFocus();
                     }
                 } else
                     Toast.makeText(getApplicationContext(), "All field are required", Toast.LENGTH_SHORT).show();
@@ -121,7 +121,6 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
                 TextUtils.isEmpty(etState.getText().toString()) ||
                 TextUtils.isEmpty(etEmail.getText().toString()) ||
                 TextUtils.isEmpty(etMobile.getText().toString())
-
                 )
 
             return false;
@@ -137,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
                 if (response != null) {
                     if (response.isStatus()) {
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                        finish();
+                      onBackPressed();
                     }
 
                     Utility.showToast(RegisterActivity.this, response.getMessage());
@@ -150,5 +149,11 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
     @Override
     public void error(Object o, int code) {
         progressDialog.dismiss();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

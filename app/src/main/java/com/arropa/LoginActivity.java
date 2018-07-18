@@ -36,6 +36,8 @@ public class LoginActivity extends AppCompatActivity implements ServerResponse {
     @BindView(R.id.etEmail)
     EditText etEmail;
     ProgressDialog progressDialog;
+    @BindView(R.id.termsConditions)
+    AppCompatTextView termsConditions;
 
     // pass context to Calligraphy
     @Override
@@ -53,6 +55,10 @@ public class LoginActivity extends AppCompatActivity implements ServerResponse {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if (PreferenceManger.getPreferenceManger().getString(PrefKeys.EMAIL) != null) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
         ButterKnife.bind(this);
 
         progressDialog = DialogWindow.showProgressDialog(LoginActivity.this, "Login",
@@ -67,13 +73,12 @@ public class LoginActivity extends AppCompatActivity implements ServerResponse {
                         progressDialog.show();
                         new Requestor(Constant.LOGIN_CODE, LoginActivity.this)
                                 .userLogin(etEmail.getText().toString(), etPassword.getText().toString());
-                    }
-                    else {
+                    } else {
                         etEmail.setError("enter valid email address");
                         etEmail.requestFocus();
                     }
                 } else {
-                Utility.showToast(LoginActivity.this,"all fields required");
+                    Utility.showToast(LoginActivity.this, "All fields required");
                 }
             }
         });
@@ -88,15 +93,28 @@ public class LoginActivity extends AppCompatActivity implements ServerResponse {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
+
+        termsConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ReadPrivacy.class));
             }
         });
     }
 
     private boolean isValidate() {
-        if (TextUtils.isEmpty(etEmail.getText().toString()) || TextUtils.isEmpty(etPassword.getText().toString()))
+        if (TextUtils.isEmpty(etEmail.getText().toString())) {
+            etEmail.setError("Enter email address");
+            etEmail.requestFocus();
             return false;
-        else return true;
+        } else if (TextUtils.isEmpty(etPassword.getText().toString())) {
+            etPassword.setError("Enter password");
+            etPassword.requestFocus();
+            return false;
+        } else return true;
 
     }
 
@@ -108,12 +126,12 @@ public class LoginActivity extends AppCompatActivity implements ServerResponse {
                 LoginModel response = (LoginModel) o;
                 if (response != null) {
                     if (response.isStatus()) {
-                        if (response.getUserdetail()!=null&&response.getUserdetail().getUserdetails()!=null)
-                        {
+                        if (response.getUserdetail() != null && response.getUserdetail().getUserdetails() != null) {
                             UserDetailsModel userdetails = response.getUserdetail().getUserdetails();
                             PreferenceManger preferenceManger = PreferenceManger.getPreferenceManger();
-                            preferenceManger.setString(PrefKeys.EMAIL,userdetails.getVenEmail());
-                            preferenceManger.setString(PrefKeys.USERNAME,userdetails.getVenName());
+                            preferenceManger.setString(PrefKeys.USERID,userdetails.getVenId());
+                            preferenceManger.setString(PrefKeys.EMAIL, userdetails.getVenEmail());
+                            preferenceManger.setString(PrefKeys.USERNAME, userdetails.getVenName());
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         }
@@ -129,6 +147,6 @@ public class LoginActivity extends AppCompatActivity implements ServerResponse {
 
     @Override
     public void error(Object o, int code) {
-
+    progressDialog.dismiss();
     }
 }

@@ -46,6 +46,7 @@ public class DialogWindow {
                 String m_Text = input.getText().toString();
 
                 if (Validator.isEmailValid(m_Text)) {
+                    Utility.showToast(context,"Password reset link sent to your registered email id");
                     final AlertDialog progressDialog = showForgotDialog(context);
                   /*  RetrofitClient.getMyClient().create(Apis.class)
                             .forgotPassword(m_Text).enqueue(new Callback<ResponseModel>() {

@@ -14,10 +14,8 @@ import com.arropa.adapters.CartAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActivityCart extends MyAbstractActivity {
+public class FavoriteList extends MyAbstractActivity {
     RecyclerView recyclerView;
-    @BindView(R.id.checkout)
-    AppCompatButton checkout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,24 +26,19 @@ public class ActivityCart extends MyAbstractActivity {
 
     @Override
     public void initViews() {
-        setContentView(R.layout.activity_cart_list);
+        setContentView(R.layout.activity_favorite_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setToolbar(toolbar);
-        setTitle("My Cart");
+        setTitle("My Favorite");
         showBackButton();
 
         ButterKnife.bind(this);
 
-        checkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ActivityCart.this, AddAddress.class));
-            }
-        });
+      /*
 
         recyclerView = findViewById(R.id.cartList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(ActivityCart.this));
-        recyclerView.setAdapter(new CartAdapter(ActivityCart.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(FavoriteList.this));
+        recyclerView.setAdapter(new CartAdapter(FavoriteList.this));*/
     }
 
     @Override

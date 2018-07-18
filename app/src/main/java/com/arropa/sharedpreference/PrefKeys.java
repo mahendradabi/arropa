@@ -1,6 +1,7 @@
 package com.arropa.sharedpreference;
 
 public final class PrefKeys {
+    public static final String ADDRESS ="address" ;
     public static String PREFERENCENAME="user";
 
     public static String USERNAME="username";

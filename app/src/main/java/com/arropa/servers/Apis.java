@@ -26,18 +26,30 @@ public interface Apis {
                               @Field("School_Contact_Us") String addhar,
                               @Field("shopaddress") String shopaddress,
                               @Field("resAddress") String resAddress,
-                              @Field("City") String  City,
+                              @Field("City") String City,
                               @Field("state") String state,
                               @Field("pincode") String pincode,
                               @Field("password") String password,
                               @Field("vendermobile") String vendermobile
-                              );
+    );
 
     @FormUrlEncoded
-    @POST(Constant.PATH+"u_signin")
+    @POST(Constant.PATH + "u_signin")
     Call<LoginModel> login(@Field("venderemail") String venderemail,
                            @Field("password") String password);
 
     @GET
     Call<ProductList> getProductList(@Url String url);
+
+    @FormUrlEncoded
+    @POST(Constant.PATH + "fevinsrt")
+    Call<MyResponse> addFavoriteProduct(@Field("ven_id") String id,@Field("prd_id") String pid);
+
+    @FormUrlEncoded
+    @POST(Constant.PATH + "product")
+    Call<MyResponse> getCartList(@Field("ven_id") String id);
+
+    @FormUrlEncoded
+    @POST(Constant.PATH + "favorite")
+    Call<MyResponse> getFavoriteList(@Field("ven_id") String id);
 }

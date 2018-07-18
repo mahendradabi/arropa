@@ -6,10 +6,6 @@
 
     <include layout="@layout/toolbar" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <android.support.v7.widget.RecyclerView
             android:layout_above="@id/checkout"
             android:id="@+id/cartList"
@@ -18,19 +14,5 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp" />
-
-        <Button
-            android:layout_margin="5dp"
-            android:id="@+id/checkout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="left"
-            android:background="@drawable/inverse_button"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
-            android:text="Checkout"
-            android:textColor="@color/white" />
-    </RelativeLayout>
 
 </LinearLayout>

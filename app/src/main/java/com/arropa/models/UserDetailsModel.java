@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class UserDetailsModel {
+    @SerializedName("ven_id")
+    @Expose
+    private String venId;
     @SerializedName("ven_name")
     @Expose
     private String venName;
@@ -135,6 +138,14 @@ public class UserDetailsModel {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getVenId() {
+        return venId;
+    }
+
+    public void setVenId(String venId) {
+        this.venId = venId;
     }
 
 }

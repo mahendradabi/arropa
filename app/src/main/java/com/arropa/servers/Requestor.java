@@ -65,8 +65,7 @@ public class Requestor {
                 });
     }
 
-    public void getProductList(String url)
-    {
+    public void getProductList(String url) {
         apis.getProductList(url)
                 .enqueue(new Callback<ProductList>() {
                     @Override
@@ -83,5 +82,57 @@ public class Requestor {
                 });
     }
 
+    public void addFavorite(String userId,String pid) {
+        apis.addFavoriteProduct(userId,pid)
+                .enqueue(new Callback<MyResponse>() {
+                    @Override
+                    public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                        if (response.code() == 200 && response.body() != null)
+                            serverResponse.success(response.body(), code);
+                        else serverResponse.error("Error", code);
+                    }
 
+                    @Override
+                    public void onFailure(Call<MyResponse> call, Throwable t) {
+                        serverResponse.error(t.getMessage(), code);
+                    }
+                });
+    }
+
+    public void getFavoriteList(String userId)
+    {
+        apis.getFavoriteList(userId)
+                .enqueue(new Callback<MyResponse>() {
+                    @Override
+                    public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                        if (response.code() == 200 && response.body() != null)
+                            serverResponse.success(response.body(), code);
+                        else serverResponse.error("Error", code);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyResponse> call, Throwable t) {
+                        serverResponse.error(t.getMessage(), code);
+                    }
+                });
+    }
+
+
+    public void getCartList(String userID)
+    {
+        apis.getCartList(userID)
+                .enqueue(new Callback<MyResponse>() {
+                    @Override
+                    public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                        if (response.code() == 200 && response.body() != null)
+                            serverResponse.success(response.body(), code);
+                        else serverResponse.error("Error", code);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyResponse> call, Throwable t) {
+                        serverResponse.error(t.getMessage(), code);
+                    }
+                });
+    }
 }

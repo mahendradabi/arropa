@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +21,8 @@ public class FragmentProductList extends MyAbstractFragment implements ServerRes
     AutofitRecyclerView recyclerView;
     AppCompatTextView msg;
 
+    ContentLoadingProgressBar progressBar;
+
     public static Fragment intantiateList(String endPoint) {
         Bundle bundle = new Bundle();
         bundle.putString("url", endPoint);
@@ -37,16 +37,19 @@ public class FragmentProductList extends MyAbstractFragment implements ServerRes
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
         initViews(view);
-
-
         return view;
     }
 
     @Override
     public void initViews(View view) {
         msg=view.findViewById(R.id.empty_list);
+
+        progressBar=view.findViewById(R.id.progressBar);
+
         Bundle arguments = getArguments();
         if (arguments != null) {
+            progressBar.setVisibility(View.VISIBLE);
+            msg.setVisibility(View.GONE);
             String url = Constant.HOST_URL + Constant.PATH + arguments.getString("url");
             new Requestor(Constant.GET_PRODUCT_LIST, FragmentProductList.this)
                     .getProductList(url);
@@ -62,6 +65,7 @@ public class FragmentProductList extends MyAbstractFragment implements ServerRes
 
     @Override
     public void success(Object o, int code) {
+        progressBar.setVisibility(View.GONE);
         if (code == Constant.GET_PRODUCT_LIST) {
             ProductList list=(ProductList)o;
             if (list!=null&&list.getList()!=null)
@@ -75,6 +79,6 @@ public class FragmentProductList extends MyAbstractFragment implements ServerRes
 
     @Override
     public void error(Object o, int code) {
-
+            progressBar.setVisibility(View.GONE);
     }
 }

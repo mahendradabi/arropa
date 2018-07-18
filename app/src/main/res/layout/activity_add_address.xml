@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_container">
+
+    <include layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/rl_saved_address"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="5dp"
+                    android:text="Delivery Address"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/change_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_botton"
+                    android:padding="5dp"
+                    android:text="Change"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_botton"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_landmark_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Anand bazzar, Old palasia-Indore"
+                    android:textAllCaps="true" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="ABC Xyz"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_full_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="303 Naveen Tower, Anand Bazar Greater kilash road,old Palasia Indore (MP) 452001" />
+
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:drawablePadding="5dp"
+                    android:text="9890300000"
+                    android:drawableTint="@color/colorPrimary"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_continue"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/white"
+            android:background="@drawable/inverse_button"
+            android:text="Continue" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_address_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/add_address"
+            android:layout_marginBottom="5dp"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+
+                <EditText
+                    android:id="@+id/address"
+                    style="@style/mEditText"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="Add Address"
+                    android:maxLines="4"
+                    android:minLines="3"
+                    android:inputType="textMultiLine"
+                  />
+                <EditText
+                    android:id="@+id/zipcode"
+                    style="@style/mEditText"
+                    android:hint="Add Pincode"
+                    android:text="" />
+
+                <EditText
+                    android:id="@+id/landmark"
+                    style="@style/mEditText"
+                    android:hint="Add landmark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/city"
+                        style="@style/mEditText"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:hint="City" />
+
+                    <EditText
+                        android:id="@+id/state"
+                        style="@style/mEditText"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_weight="1"
+                        android:hint="State" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Add your contact details"
+                    android:textAllCaps="true" />
+
+                <EditText
+                    android:id="@+id/fname"
+                    style="@style/mEditText"
+                    android:layout_marginTop="5dp"
+                    android:hint="First Name" />
+
+                <EditText
+                    android:id="@+id/lname"
+                    style="@style/mEditText"
+                    android:hint="Last Name" />
+
+                <EditText
+                    android:id="@+id/mobile"
+                    style="@style/mEditText"
+                    android:hint="Mobile Number" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/add_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/white"
+            android:background="@drawable/inverse_button"
+            android:text="Add Address" />
+    </RelativeLayout>
+</LinearLayout>

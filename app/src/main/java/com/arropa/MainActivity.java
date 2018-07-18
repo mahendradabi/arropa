@@ -2,6 +2,7 @@ package com.arropa;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 
 import com.arropa.adapters.ViewPagerAdapter;
 import com.arropa.customviews.CustPagerTransformer;
+import com.arropa.servers.Constant;
 import com.arropa.sharedpreference.PrefKeys;
 import com.arropa.sharedpreference.PreferenceManger;
 
@@ -35,7 +38,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
     PreferenceManger preferenceManger;
 
-    TextView tvCreditLimt;
+    TextView tvCreditLimt, tvUserLimit, tvRemainingLimit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,23 +60,31 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         mDrawerLayout.addDrawerListener(toggle);
 
         preferenceManger = PreferenceManger.getPreferenceManger();
-        navigationView=findViewById(R.id.navigation);
-        tabs=findViewById(R.id.tabs);
-        viewpager=findViewById(R.id.viewpager);
+        navigationView = findViewById(R.id.navigation);
+        tabs = findViewById(R.id.tabs);
+        viewpager = findViewById(R.id.viewpager);
 
         View view = navigationView.getHeaderView(0);
         AppCompatTextView userName = view.findViewById(R.id.username);
 
         navigationView.setNavigationItemSelectedListener(this);
 
-      tvCreditLimt= (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+        tvCreditLimt = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.creditLimit));
+        tvUserLimit = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+                findItem(R.id.useLimit));
+        tvRemainingLimit = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+                findItem(R.id.reamingLimit));
 
-      if (tvCreditLimt!=null)
-          tvCreditLimt.setText("100000");
+        if (tvCreditLimt != null) {
+            initializeCountDrawer();
+            tvCreditLimt.setVisibility(View.INVISIBLE);
+            tvUserLimit.setVisibility(View.INVISIBLE);
+            tvRemainingLimit.setVisibility(View.INVISIBLE);
+        }
 
-        if (preferenceManger!=null)
-        userName.setText(preferenceManger.getString(PrefKeys.USERNAME));
+        if (preferenceManger != null)
+            userName.setText(preferenceManger.getString(PrefKeys.USERNAME));
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(FragmentProductList.intantiateList("product_shirt"), "Shirt");
@@ -133,6 +144,8 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
             case R.id.cart:
                 startActivity(new Intent(MainActivity.this, ActivityCart.class));
                 break;
+
+
         }
         return true;
     }
@@ -140,14 +153,62 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.signout:
                 PreferenceManger.getPreferenceManger().clearSession();
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 finish();
+                break;
+            case R.id.myprofile:
+                startActivity(new Intent(MainActivity.this, MyProfile.class));
+                break;
+            case R.id.termsConditions:
+                startActivity(new Intent(MainActivity.this, ReadPrivacy.class));
+                break;
+
+            case R.id.useLimit:
+                hideShowLimit(tvUserLimit);
+                break;
+
+            case R.id.creditLimit:
+                hideShowLimit(tvCreditLimt);
+                break;
+            case R.id.reamingLimit:
+                hideShowLimit(tvRemainingLimit);
+                break;
+
+            case R.id.favorite:
+                startActivity(new Intent(MainActivity.this,FavoriteList.class));
                 break;
         }
         return true;
+    }
+
+
+    private void initializeCountDrawer() {
+        //Gravity property aligns the text
+        tvCreditLimt.setGravity(Gravity.CENTER_VERTICAL);
+        tvCreditLimt.setTypeface(null, Typeface.BOLD);
+        tvCreditLimt.setTextColor(getResources().getColor(R.color.colorAccent));
+        tvCreditLimt.setText(Constant.CURRENCY + " " + "10000");
+
+        tvUserLimit.setGravity(Gravity.CENTER_VERTICAL);
+        tvUserLimit.setTypeface(null, Typeface.BOLD);
+        tvUserLimit.setTextColor(getResources().getColor(R.color.colorAccent));
+        tvUserLimit.setText(Constant.CURRENCY + " " + "4000");
+
+        tvRemainingLimit.setGravity(Gravity.CENTER_VERTICAL);
+        tvRemainingLimit.setTypeface(null, Typeface.BOLD);
+        tvRemainingLimit.setTextColor(getResources().getColor(R.color.colorAccent));
+        tvRemainingLimit.setText(Constant.CURRENCY + " " + "6000");
+
+
+    }
+
+    private void hideShowLimit(TextView tv)
+    {
+        if (tv.getVisibility()==View.VISIBLE)
+            tv.setVisibility(View.INVISIBLE);
+        else tv.setVisibility(View.VISIBLE);
     }
 }
