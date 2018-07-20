@@ -18,6 +18,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.arropa.adapters.ViewPagerAdapter;
@@ -38,7 +39,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
     PreferenceManger preferenceManger;
 
-    TextView tvCreditLimt, tvUserLimit, tvRemainingLimit;
+    TextView tvCreditLimt, tvUserLimit, tvRemainingLimit, tvCartCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,8 +124,23 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
+        MenuItem item = menu.findItem(R.id.cart);
+        MenuItemCompat.setActionView(item, R.layout.cart_count);
+      RelativeLayout  v= (RelativeLayout) MenuItemCompat.getActionView(item);
+        tvCartCount = (TextView) v.findViewById(R.id.cart_item_count);
+
+        if (tvCartCount!=null) tvCartCount.setText("10");
+        v.findViewById(R.id.cartimage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ActivityCart.class));
+            }
+        });
+
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -178,7 +194,15 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
                 break;
 
             case R.id.favorite:
-                startActivity(new Intent(MainActivity.this,FavoriteList.class));
+                startActivity(new Intent(MainActivity.this, FavoriteList.class));
+                break;
+
+            case R.id.orders:
+                startActivity(new Intent(MainActivity.this, MyOrderList.class));
+                break;
+
+            case R.id.mycart:
+                startActivity(new Intent(MainActivity.this, ActivityCart.class));
                 break;
         }
         return true;
@@ -205,9 +229,8 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
     }
 
-    private void hideShowLimit(TextView tv)
-    {
-        if (tv.getVisibility()==View.VISIBLE)
+    private void hideShowLimit(TextView tv) {
+        if (tv.getVisibility() == View.VISIBLE)
             tv.setVisibility(View.INVISIBLE);
         else tv.setVisibility(View.VISIBLE);
     }

@@ -99,25 +99,34 @@
                     android:textSize="14sp" />
 
 
-                <EditText
-                    android:id="@+id/etCity"
-                    style="@style/mEditText"
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border_edittext"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="City"
-                    android:inputType="text"
-                    android:textSize="14sp" />
+                    android:layout_height="wrap_content">
+                    <Spinner
+                        android:id="@+id/spinnerState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="State"
+                        android:inputType="text"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
-
-                <EditText
-                    android:id="@+id/etState"
-                    style="@style/mEditText"
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border_edittext"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="State"
-                    android:inputType="text"
-                    android:textSize="14sp" />
+                    android:layout_height="wrap_content">
+                    <Spinner
+                        android:id="@+id/spinnerCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="City"
+                        android:inputType="text"
+                        android:textSize="14sp" />
 
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/etPincode"
@@ -130,6 +139,7 @@
 
 
                 <EditText
+
                     android:id="@+id/etPassword"
                     style="@style/mEditText"
                     android:layout_width="match_parent"

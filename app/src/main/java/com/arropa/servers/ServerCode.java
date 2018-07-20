@@ -16,6 +16,11 @@ public interface ServerCode {
    int GET_PRODUCT_LIST=3;
    int ADD_FAVORITE=4;
    int ADD_CART=5;
+   int REMOVE_FAVORITE=6;
+   int CITY_LIST=7;
+   int STATE_LIST=8;
+   int GET_PROFILE=9;
+   int UPDATE_PROFILE=10;
 
 
 

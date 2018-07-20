@@ -29,6 +29,7 @@
         <activity android:name=".AddAddress"/>
         <activity android:name=".payment.PayMentGateWay"/>
         <activity android:name=".FavoriteList"/>
+        <activity android:name=".MyOrderList"/>
 
 
     </application>

@@ -52,6 +52,31 @@
                     android:layout_height="wrap_content"
                     android:text="Free Delivery" />
 
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4.4 *"
+                      android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="@color/white"
+                       android:background="@color/darkPink"/>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:visibility="gone"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="15 reviews &amp; 15 reviews"/>
+
+
+
+                </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.1dp"
@@ -66,6 +91,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/llShare"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -78,7 +104,6 @@
                             app:srcCompat="@drawable/ic_share_black_24dp" />
 
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tvShare"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -89,6 +114,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llSimilar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -101,7 +127,6 @@
                             app:srcCompat="@drawable/ic_content_copy_black_24dp" />
 
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tvSimilar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -112,6 +137,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llFavorite"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -125,16 +151,15 @@
 
 
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tvFavorite"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp
-"
+                            android:layout_marginLeft="5dp"
                             android:gravity="center"
                             android:text="Wishlist"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <View
@@ -184,7 +209,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/btnselector"
+                android:background="@drawable/inverse_button"
                 android:text="Buy Now"
                 android:textColor="@color/white" />
         </LinearLayout>

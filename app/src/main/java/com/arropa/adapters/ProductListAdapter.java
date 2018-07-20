@@ -18,8 +18,10 @@ import com.arropa.servers.Constant;
 import java.util.List;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.MyViewHolder> {
+
     Context mContex;
     List<ProductModel> list;
+
     public ProductListAdapter(Context mContex, List<ProductModel> list) {
         this.mContex = mContex;
         this.list=list;

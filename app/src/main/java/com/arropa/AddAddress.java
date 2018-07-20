@@ -1,5 +1,6 @@
 package com.arropa;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.transition.TransitionManager;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,10 +23,17 @@ import com.arropa.sharedpreference.PrefKeys;
 import com.arropa.sharedpreference.PreferenceManger;
 import com.google.gson.Gson;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class AddAddress extends AppCompatActivity {
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
-PreferenceManger managerInstance;
+
+    PreferenceManger managerInstance;
     LinearLayout root;
     RelativeLayout saved, form;
 
@@ -42,7 +51,7 @@ PreferenceManger managerInstance;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       getSupportActionBar().setTitle("Shipment");
+        getSupportActionBar().setTitle("Shipment");
 
 
         zipcode = (EditText) findViewById(R.id.zipcode);
@@ -68,8 +77,6 @@ PreferenceManger managerInstance;
         form = (RelativeLayout) findViewById(R.id.rl_address_form);
 
         root = (LinearLayout) findViewById(R.id.ll_container);
-
-
 
 
         managerInstance = PreferenceManger.getPreferenceManger();
@@ -99,26 +106,28 @@ PreferenceManger managerInstance;
         add_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Gson gson = new Gson();
-                AddressModel addressModel = new AddressModel();
-                addressModel.setZip_code(zipcode.getText().toString());
-                addressModel.setAddress(address.getText().toString());
-                addressModel.setLandmark(landmark.getText().toString());
-                addressModel.setCity(city.getText().toString());
-                addressModel.setState(state.getText().toString());
-                addressModel.setFname(fname.getText().toString());
-                addressModel.setLname(lname.getText().toString());
-                addressModel.setMobile(mobile.getText().toString());
-                String s = gson.toJson(addressModel);
-                if (s != null) {
-                    managerInstance.setString(PrefKeys.ADDRESS, s);
+                if (isAllValidate()) {
+                    Gson gson = new Gson();
+                    AddressModel addressModel = new AddressModel();
+                    addressModel.setZip_code(zipcode.getText().toString());
+                    addressModel.setAddress(address.getText().toString());
+                    addressModel.setLandmark(landmark.getText().toString());
+                    addressModel.setCity(city.getText().toString());
+                    addressModel.setState(state.getText().toString());
+                    addressModel.setFname(fname.getText().toString());
+                    addressModel.setLname(lname.getText().toString());
+                    addressModel.setMobile(mobile.getText().toString());
+                    String s = gson.toJson(addressModel);
+                    if (s != null) {
+                        managerInstance.setString(PrefKeys.ADDRESS, s);
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-                        TransitionManager.beginDelayedTransition(root);
-                    form.setVisibility(View.GONE);
-                    saved.setVisibility(View.VISIBLE);
-                    updateUi();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                            TransitionManager.beginDelayedTransition(root);
+                        form.setVisibility(View.GONE);
+                        saved.setVisibility(View.VISIBLE);
+                        updateUi();
 
+                    }
                 }
             }
         });
@@ -129,6 +138,48 @@ PreferenceManger managerInstance;
                 openPayment();
             }
         });
+    }
+
+    private boolean isAllValidate() {
+        if (TextUtils.isEmpty(zipcode.getText().toString())) {
+            zipcode.setError("enter zipcode");
+            zipcode.requestFocus();
+            return false;
+        } else if (TextUtils.isEmpty(address.getText().toString())) {
+            address.setError("enter address");
+            address.requestFocus();
+            return false;
+        } else if (TextUtils.isEmpty(landmark.getText().toString())) {
+            landmark.setError("enter landmark");
+            landmark.requestFocus();
+            return false;
+        } else if (TextUtils.isEmpty(city.getText().toString())) {
+            city.setError("enter city");
+            city.requestFocus();
+            return false;
+        } else if (TextUtils.isEmpty(state.getText().toString())) {
+            state.setError("enter state");
+            state.requestFocus();
+            return false;
+        } else if (TextUtils.isEmpty(fname.getText().toString())) {
+            fname.setError("enter first name");
+            fname.requestFocus();
+            return false;
+        } else if (TextUtils.isEmpty(lname.getText().toString())) {
+            lname.setError("enter last name");
+            lname.requestFocus();
+            return false;
+        } else if (TextUtils.isEmpty(mobile.getText().toString())) {
+            mobile.setError("enter mobile number");
+            mobile.requestFocus();
+            return false;
+        } else if (mobile.getText().toString().length() != 10) {
+            mobile.setError("enter 10 digit valid mobile number");
+            mobile.requestFocus();
+            return false;
+        } else
+            return true;
+
     }
 
     private void updateUi() {
@@ -162,14 +213,13 @@ PreferenceManger managerInstance;
         return true;
     }
 
-    private void openPayment()
-    {
+    private void openPayment() {
 
         Intent intent = new Intent(AddAddress.this, PayMentGateWay.class);
-        intent.putExtra("FIRST_NAME","Arropa testing Payment");
-        intent.putExtra("PHONE_NUMBER","1234567890");
-        intent.putExtra("EMAIL_ADDRESS","test@gmail.com");
-        intent.putExtra("RECHARGE_AMT",String.valueOf(100));
+        intent.putExtra("FIRST_NAME", "Arropa testing Payment");
+        intent.putExtra("PHONE_NUMBER", "1234567890");
+        intent.putExtra("EMAIL_ADDRESS", "test@gmail.com");
+        intent.putExtra("RECHARGE_AMT", String.valueOf(100));
         startActivity(intent);
     }
 }

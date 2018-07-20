@@ -23,7 +23,12 @@
             app:srcCompat="@drawable/shirt" />
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -46,6 +51,15 @@
                 android:text="\u20b9 2500"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
+        </LinearLayout>
+            <android.support.v7.widget.AppCompatImageView
+                android:padding="5dp"
+                android:visibility="gone"
+                android:layout_marginRight="5dp"
+                android:id="@+id/removeFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_favorite_filled_black_24dp"/>
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatTextView

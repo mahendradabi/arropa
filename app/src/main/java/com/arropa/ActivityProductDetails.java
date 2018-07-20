@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.arropa.models.MyResponse;
@@ -23,12 +24,12 @@ import butterknife.ButterKnife;
 
 public class ActivityProductDetails extends MyAbstractActivity implements ServerResponse {
 
-    @BindView(R.id.tvShare)
-    AppCompatTextView tvShare;
-    @BindView(R.id.tvSimilar)
-    AppCompatTextView tvSimilar;
-    @BindView(R.id.tvFavorite)
-    AppCompatTextView tvFavorite;
+    @BindView(R.id.llShare)
+    LinearLayout tvShare;
+    @BindView(R.id.llSimilar)
+    LinearLayout tvSimilar;
+    @BindView(R.id.llFavorite)
+    LinearLayout tvFavorite;
 
     @BindView(R.id.producttvname)
     AppCompatTextView tvName;
@@ -93,7 +94,8 @@ String id;
         addcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utility.showToast(ActivityProductDetails.this, "Added to cart");
+                new Requestor(Constant.ADD_FAVORITE, ActivityProductDetails.this)
+                        .addCartProduct(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID),id);
 
             }
         });

@@ -7,12 +7,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arropa.models.CityList;
+import com.arropa.models.Citydetail;
 import com.arropa.models.MyResponse;
+import com.arropa.models.StateList;
+import com.arropa.models.Statedetail;
 import com.arropa.servers.Constant;
 import com.arropa.servers.Requestor;
 import com.arropa.servers.ServerResponse;
@@ -21,6 +28,9 @@ import com.arropa.sharedpreference.PreferenceManger;
 import com.arropa.utils.DialogWindow;
 import com.arropa.utils.Utility;
 import com.arropa.utils.Validator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindInt;
 import butterknife.BindView;
@@ -41,10 +51,10 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
     EditText etShopAddress;
     @BindView(R.id.etResAddress)
     EditText etResAddress;
-    @BindView(R.id.etCity)
-    EditText etCity;
-    @BindView(R.id.etState)
-    EditText etState;
+    @BindView(R.id.spinnerCity)
+    Spinner etCity;
+    @BindView(R.id.spinnerState)
+    Spinner etState;
     @BindView(R.id.etPincode)
     EditText etPincode;
     @BindView(R.id.etPassword)
@@ -59,6 +69,8 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
     Button creataccount;
 
     ProgressDialog progressDialog;
+    List<String> state = new ArrayList<>();
+    List<String> city = new ArrayList<>();
 
     // pass context to Calligraphy
     @Override
@@ -90,21 +102,47 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
                     if (!Validator.isEmailValid(etEmail.getText().toString())) {
                         etEmail.setError("enter valid email address");
                         etEmail.requestFocus();
-                    } else if (etAddharCardno.length() != 13) {
-                        etAddharCardno.setError("Enter 13 digit addhar number");
+                    } else if (etAddharCardno.length() != 12) {
+                        etAddharCardno.setError("Enter 12 digit addhar number");
                         etAddharCardno.requestFocus();
+                    } else if (etMobile.getText().length() != 10) {
+                        etMobile.setError("Enter 10 digit number");
+                        etMobile.requestFocus();
+                    } else if (etPassword.getText().length() < 8) {
+                        etPassword.setError("Password minimum 8 charcter required");
+                        etPassword.requestFocus();
                     } else {
                         progressDialog.show();
                         new Requestor(Constant.REGISTER_CODE, RegisterActivity.this)
                                 .userRegister(etName.getText().toString(),
                                         etEmail.getText().toString(), etShopName.getText().toString(),
                                         etAddharCardno.getText().toString(), etShopAddress.getText().toString(),
-                                        etResAddress.getText().toString(), etCity.getText().toString(),
-                                        etState.getText().toString(), etPincode.getText().toString(), etPassword.getText().toString(),
+                                        etResAddress.getText().toString(), etCity.getSelectedItem().toString(),
+                                        etState.getSelectedItem().toString(), etPincode.getText().toString(), etPassword.getText().toString(),
                                         etMobile.getText().toString());
                     }
                 } else
                     Toast.makeText(getApplicationContext(), "All field are required", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        new Requestor(Constant.STATE_LIST,RegisterActivity.this)
+                .getStates();
+
+        city.add("Select City");
+        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, city);
+        etCity.setAdapter(arrayAdapter);
+
+        etState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    new Requestor(Constant.CITY_LIST,RegisterActivity.this)
+                            .getCity(etState.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
@@ -113,18 +151,22 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
         if (TextUtils.isEmpty(etName.getText().toString()) ||
                 TextUtils.isEmpty(etShopName.getText().toString()) ||
                 TextUtils.isEmpty(etAddharCardno.getText().toString()) ||
-                TextUtils.isEmpty(etCity.getText().toString()) ||
                 TextUtils.isEmpty(etPassword.getText().toString()) ||
                 TextUtils.isEmpty(etPincode.getText().toString()) ||
                 TextUtils.isEmpty(etResAddress.getText().toString()) ||
                 TextUtils.isEmpty(etShopAddress.getText().toString()) ||
-                TextUtils.isEmpty(etState.getText().toString()) ||
                 TextUtils.isEmpty(etEmail.getText().toString()) ||
                 TextUtils.isEmpty(etMobile.getText().toString())
                 )
 
             return false;
-        else return true;
+        else if (etState.getSelectedItemPosition() == 0) {
+            Utility.showToast(RegisterActivity.this, "Select state");
+            return false;
+        } else if (etCity.getSelectedItemPosition() == 0) {
+            Utility.showToast(RegisterActivity.this, "Select city");
+            return false;
+        } else return true;
     }
 
     @Override
@@ -136,10 +178,43 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
                 if (response != null) {
                     if (response.isStatus()) {
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                      onBackPressed();
+                        onBackPressed();
                     }
-
                     Utility.showToast(RegisterActivity.this, response.getMessage());
+
+                }
+                break;
+
+            case Constant.CITY_LIST:
+                CityList cityList = (CityList) o;
+
+                if (cityList != null&&cityList.getCitydetail()!=null) {
+                    city.clear();
+                    city.add("Select City");
+                    for (Citydetail citydetail : cityList.getCitydetail()) {
+                        city.add(citydetail.getCityName());
+                    }
+                    ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, city);
+                    etCity.setAdapter(arrayAdapter);
+
+
+                }
+                break;
+            case Constant.STATE_LIST:
+                StateList stateList = (StateList) o;
+                if (stateList != null) {
+                    List<Statedetail> statedetail = stateList.getStatedetail();
+                    if (statedetail != null) {
+                        state.clear();
+                        state.add("Select State");
+                        for (Statedetail stateNames : stateList.getStatedetail()) {
+                            state.add(stateNames.getStateName());
+                        }
+                        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, state);
+                        etState.setAdapter(arrayAdapter);
+
+
+                    }
 
                 }
                 break;
