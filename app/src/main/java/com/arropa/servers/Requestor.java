@@ -248,8 +248,8 @@ public class Requestor {
         });
     }
 
-    public void uloadPhoto(RequestBody userid, MultipartBody.Part photo) {
-        apis.uploadPhoto(userid, photo).enqueue(new Callback<MyResponse>() {
+    public void uloadPhoto(RequestBody userid, MultipartBody.Part picture) {
+        apis.uploadPhoto(userid, picture).enqueue(new Callback<MyResponse>() {
             @Override
             public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                 if (response.code() == 200 && response.body() != null)

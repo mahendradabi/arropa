@@ -77,7 +77,7 @@ public interface Apis {
 
     @FormUrlEncoded
     @POST(Constant.PATH + "city")
-    Call<CityList> getCity(@Field("state") String name);
+    Call<CityList> getCity(@Field("id") String name);
 
     @FormUrlEncoded
     @POST(Constant.PATH+"Profilefetch")
@@ -102,9 +102,9 @@ public interface Apis {
 
 
     @Multipart
-    @POST(Constant.PATH + "dfsfa")
-    Call<MyResponse> uploadPhoto(@Part("userid") RequestBody userId,
-                                          @Part MultipartBody.Part photo);
+    @POST(Constant.PATH + "uploadprofile")
+    Call<MyResponse> uploadPhoto(@Part("ven_id") RequestBody userId,
+                                          @Part MultipartBody.Part picture);
 
 
 }

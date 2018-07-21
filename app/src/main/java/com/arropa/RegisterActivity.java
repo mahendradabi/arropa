@@ -70,7 +70,9 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
 
     ProgressDialog progressDialog;
     List<String> state = new ArrayList<>();
+    List<String> stateid = new ArrayList<>();
     List<String> city = new ArrayList<>();
+
 
     // pass context to Calligraphy
     @Override
@@ -132,12 +134,16 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
         city.add("Select City");
         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, city);
         etCity.setAdapter(arrayAdapter);
+        state.add("Select State");
+       ArrayAdapter  stateAdpter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, state);
+        etState.setAdapter(stateAdpter);
 
         etState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position>0)
                     new Requestor(Constant.CITY_LIST,RegisterActivity.this)
-                            .getCity(etState.getSelectedItem().toString());
+                            .getCity(stateid.get(position));
             }
 
             @Override
@@ -206,9 +212,12 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
                     List<Statedetail> statedetail = stateList.getStatedetail();
                     if (statedetail != null) {
                         state.clear();
+                        stateid.clear();
                         state.add("Select State");
+                        stateid.add("0");
                         for (Statedetail stateNames : stateList.getStatedetail()) {
-                            state.add(stateNames.getStateName());
+                            state.add(stateNames.getName());
+                            stateid.add(stateNames.getId());
                         }
                         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, state);
                         etState.setAdapter(arrayAdapter);

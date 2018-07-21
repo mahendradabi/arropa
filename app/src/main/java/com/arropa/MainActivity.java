@@ -1,5 +1,6 @@
 package com.arropa;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -27,12 +28,15 @@ import android.widget.Toast;
 
 import com.arropa.adapters.ViewPagerAdapter;
 import com.arropa.customviews.CustPagerTransformer;
+import com.arropa.models.MyResponse;
 import com.arropa.servers.Constant;
 import com.arropa.servers.Requestor;
 import com.arropa.servers.ServerCode;
 import com.arropa.servers.ServerResponse;
 import com.arropa.sharedpreference.PrefKeys;
 import com.arropa.sharedpreference.PreferenceManger;
+import com.arropa.utils.DialogWindow;
+import com.arropa.utils.Utility;
 import com.nguyenhoanglam.imagepicker.helper.PreferenceHelper;
 import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;
@@ -46,7 +50,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabSelectedListener, NavigationView.OnNavigationItemSelectedListener,ServerResponse {
+public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabSelectedListener, NavigationView.OnNavigationItemSelectedListener, ServerResponse {
     DrawerLayout mDrawerLayout;
     private static final int PICK_IMAGE = 103;
     NavigationView navigationView;
@@ -61,6 +65,9 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
     TextView tvCreditLimt, tvUserLimit, tvRemainingLimit, tvCartCount;
 
     CircleImageView img_user_profile;
+
+    //dialog
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +95,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
         View view = navigationView.getHeaderView(0);
         AppCompatTextView userName = view.findViewById(R.id.username);
-        img_user_profile=view.findViewById(R.id.img_user_profile);
+        img_user_profile = view.findViewById(R.id.img_user_profile);
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -106,8 +113,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
             tvRemainingLimit.setVisibility(View.INVISIBLE);
         }
 
-        if (preferenceManger != null)
-        {
+        if (preferenceManger != null) {
             userName.setText(preferenceManger.getString(PrefKeys.USERNAME));
         }
 
@@ -121,6 +127,9 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         viewpager.setPageTransformer(false, new CustPagerTransformer(MainActivity.this));
         viewpager.setAdapter(adapter);
         tabs.setupWithViewPager(viewpager);
+
+        dialog = DialogWindow.showProgressDialog(MainActivity.this, "Profile", "Please wait profile is uploding...");
+        dialog.setCancelable(false);
 
         img_user_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,20 +166,19 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         getMenuInflater().inflate(R.menu.home_menu, menu);
         MenuItem item = menu.findItem(R.id.cart);
         MenuItemCompat.setActionView(item, R.layout.cart_count);
-      RelativeLayout  v= (RelativeLayout) MenuItemCompat.getActionView(item);
+        RelativeLayout v = (RelativeLayout) MenuItemCompat.getActionView(item);
         tvCartCount = (TextView) v.findViewById(R.id.cart_item_count);
 
-        if (tvCartCount!=null) tvCartCount.setText("10");
+        if (tvCartCount != null) tvCartCount.setText("10");
         v.findViewById(R.id.cartimage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,ActivityCart.class));
+                startActivity(new Intent(MainActivity.this, ActivityCart.class));
             }
         });
 
         return true;
     }
-
 
 
     @Override
@@ -227,6 +235,9 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
             case R.id.mycart:
                 startActivity(new Intent(MainActivity.this, ActivityCart.class));
                 break;
+            case R.id.contactus:
+                startActivity(new Intent(MainActivity.this,ActivityContactUs.class));
+                break;
         }
         return true;
     }
@@ -276,13 +287,11 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
             ArrayList<Image> images = data.getParcelableArrayListExtra(Config.EXTRA_IMAGES);
             if (images != null && images.size() > 0) {
 
-                File img=new File(images.get(0).getPath());
-                if (img.exists())
-                {
-                  img_user_profile.setImageURI(Uri.fromFile(img));
-                   uploadPhotos(images.get(0).getPath());
-                }
-                else {
+                File img = new File(images.get(0).getPath());
+                if (img.exists()) {
+                    img_user_profile.setImageURI(Uri.fromFile(img));
+                    uploadPhotos(images.get(0).getPath());
+                } else {
                   /*  String path= Environment.getExternalStorageDirectory().getPath();
                     img=new File(path+"/Pictures/Buahh/" + images.get(0).getName());
                     if (img.exists())
@@ -299,10 +308,10 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
     }
 
     private void uploadPhotos(String path) {
-
+        if (dialog != null) dialog.show();
         new Requestor(Constant.UPLOAD_PROFILE_PHOTO, MainActivity.this)
                 .uloadPhoto(getRequestBody(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID)),
-                        prepareFilePart("orignal parameter name", new File(path)));
+                        prepareFilePart("picture", new File(path)));
 
     }
 
@@ -328,11 +337,18 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
     @Override
     public void success(Object o, int code) {
+        if (dialog != null && dialog.isShowing()) dialog.dismiss();
+        if (code==Constant.UPLOAD_PROFILE_PHOTO)
+        {
+            MyResponse response=(MyResponse)o;
+            if (response!=null&&response.getMessage()!=null)
+                Utility.showToast(MainActivity.this,response.getMessage());
 
+        }
     }
 
     @Override
     public void error(Object o, int code) {
-
+        if (dialog != null && dialog.isShowing()) dialog.dismiss();
     }
 }

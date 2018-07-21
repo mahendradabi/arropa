@@ -62,6 +62,8 @@ public class MyProfile extends MyAbstractActivity implements ServerResponse {
     Button updateProfile;
 
     List<String> state = new ArrayList<>();
+    List<String> stateid = new ArrayList<>();
+
     List<String> city = new ArrayList<>();
     PreferenceManger preferenceManger;
 
@@ -144,7 +146,7 @@ public class MyProfile extends MyAbstractActivity implements ServerResponse {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0)
                     new Requestor(Constant.CITY_LIST, MyProfile.this)
-                            .getCity(etState.getSelectedItem().toString());
+                            .getCity(stateid.get(position));
             }
 
             @Override
@@ -248,13 +250,16 @@ public class MyProfile extends MyAbstractActivity implements ServerResponse {
                     List<Statedetail> statedetail = stateList.getStatedetail();
                     if (statedetail != null) {
                         state.clear();
+                        stateid.clear();;
+                        stateid.add("0");
                         state.add("Select State");
                         int index = 0;
                         int count = 1;
                         for (Statedetail stateNames : stateList.getStatedetail()) {
-                            state.add(stateNames.getStateName());
+                            state.add(stateNames.getName());
+                            stateid.add(stateNames.getId());
                             if (userDetailsModel != null && userDetailsModel.getState() != null)
-                                if (userDetailsModel.getState().equalsIgnoreCase(stateNames.getStateName()))
+                                if (userDetailsModel.getState().equalsIgnoreCase(stateNames.getName()))
                                     index = count;
                             count++;
                         }
