@@ -65,7 +65,7 @@
                       android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:textColor="@color/white"
-                       android:background="@color/darkPink"/>
+                       android:background="@color/lightgreen"/>
                     <android.support.v7.widget.AppCompatTextView
                         android:visibility="gone"
                         android:layout_marginLeft="10dp"
@@ -147,7 +147,7 @@
                         <android.support.v7.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_content_copy_black_24dp" />
+                            app:srcCompat="@drawable/ic_favorite_border_black_24dp" />
 
 
                         <android.support.v7.widget.AppCompatTextView

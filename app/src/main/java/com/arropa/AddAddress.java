@@ -18,15 +18,22 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.arropa.models.AddressModel;
+import com.arropa.models.ProfileDetails;
+import com.arropa.models.UserDetailsModel;
 import com.arropa.payment.PayMentGateWay;
+import com.arropa.servers.Constant;
+import com.arropa.servers.Requestor;
+import com.arropa.servers.ServerResponse;
 import com.arropa.sharedpreference.PrefKeys;
 import com.arropa.sharedpreference.PreferenceManger;
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
-public class AddAddress extends AppCompatActivity {
+public class AddAddress extends AppCompatActivity implements ServerResponse {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -202,6 +209,9 @@ public class AddAddress extends AppCompatActivity {
                         + addressModel.getLandmark() + ", " + addressModel.getCity() + " " + addressModel.getState() + " " + addressModel.getZip_code());
                 tv_mobile.setText(addressModel.getMobile());
             }
+        } else {
+            new Requestor(Constant.GET_PROFILE, AddAddress.this)
+                    .getProfileDetails(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID));
         }
     }
 
@@ -221,5 +231,33 @@ public class AddAddress extends AppCompatActivity {
         intent.putExtra("EMAIL_ADDRESS", "test@gmail.com");
         intent.putExtra("RECHARGE_AMT", String.valueOf(100));
         startActivity(intent);
+    }
+
+    @Override
+    public void success(Object o, int code) {
+        switch (code) {
+            case Constant.GET_PROFILE:
+                ProfileDetails details = (ProfileDetails) o;
+                if (details != null) {
+                    List<UserDetailsModel> fevdetail = details.getFevdetail();
+                    if (fevdetail != null && fevdetail.get(0) != null) {
+                        UserDetailsModel userDetailsModel = fevdetail.get(0);
+                        if (userDetailsModel != null) {
+                            zipcode.setText(userDetailsModel.getPincode());
+                            address.setText(userDetailsModel.getResidentialAddress());
+                            state.setText(userDetailsModel.getState());
+                            city.setText(userDetailsModel.getCity());
+                            mobile.setText(userDetailsModel.getVendermobile());
+                            fname.setText(userDetailsModel.getVenName());
+                        }
+                    }
+                    break;
+                }
+        }
+    }
+
+    @Override
+    public void error(Object o, int code) {
+
     }
 }

@@ -131,10 +131,10 @@ public class MyProfile extends MyAbstractActivity implements ServerResponse {
         });
 
         city.add("Select City");
-        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, city);
+        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, city);
         etCity.setAdapter(arrayAdapter);
         state.add("Select State");
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, state);
+        arrayAdapter = new ArrayAdapter(this, R.layout.item_spinner_textview, state);
         etState.setAdapter(arrayAdapter);
 
         new Requestor(Constant.GET_PROFILE, this)
@@ -208,7 +208,7 @@ public class MyProfile extends MyAbstractActivity implements ServerResponse {
 
                         etMobile.setText(userDetailsModel.getVendermobile());
                         etResAddress.setText(userDetailsModel.getResidentialAddress());
-                        etMobile.setText(userDetailsModel.getPassword());
+                        etPassword.setText(userDetailsModel.getPassword());
                         new Requestor(Constant.STATE_LIST, MyProfile.this)
                                 .getStates();
                     }
@@ -231,7 +231,7 @@ public class MyProfile extends MyAbstractActivity implements ServerResponse {
                                 index = count;
                         count++;
                     }
-                    ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, city);
+                    ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, city);
                     etCity.setAdapter(arrayAdapter);
 
                     if (index > 0) {
@@ -260,7 +260,7 @@ public class MyProfile extends MyAbstractActivity implements ServerResponse {
                         }
 
 
-                        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, state);
+                        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, state);
                         etState.setAdapter(arrayAdapter);
 
                         if (index > 0) {

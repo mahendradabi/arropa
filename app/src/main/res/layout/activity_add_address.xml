@@ -142,6 +142,7 @@
                 <EditText
                     android:id="@+id/zipcode"
                     style="@style/mEditText"
+                    android:inputType="number"
                     android:hint="Add Pincode"
                     android:text="" />
 

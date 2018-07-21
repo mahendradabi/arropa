@@ -130,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
                 .getStates();
 
         city.add("Select City");
-        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, city);
+        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, city);
         etCity.setAdapter(arrayAdapter);
 
         etState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -194,7 +194,7 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
                     for (Citydetail citydetail : cityList.getCitydetail()) {
                         city.add(citydetail.getCityName());
                     }
-                    ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, city);
+                    ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, city);
                     etCity.setAdapter(arrayAdapter);
 
 
@@ -210,7 +210,7 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
                         for (Statedetail stateNames : stateList.getStatedetail()) {
                             state.add(stateNames.getStateName());
                         }
-                        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, state);
+                        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, state);
                         etState.setAdapter(arrayAdapter);
 
 

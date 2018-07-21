@@ -3,7 +3,9 @@ package com.arropa;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -20,16 +23,32 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arropa.adapters.ViewPagerAdapter;
 import com.arropa.customviews.CustPagerTransformer;
 import com.arropa.servers.Constant;
+import com.arropa.servers.Requestor;
+import com.arropa.servers.ServerCode;
+import com.arropa.servers.ServerResponse;
 import com.arropa.sharedpreference.PrefKeys;
 import com.arropa.sharedpreference.PreferenceManger;
+import com.nguyenhoanglam.imagepicker.helper.PreferenceHelper;
+import com.nguyenhoanglam.imagepicker.model.Config;
+import com.nguyenhoanglam.imagepicker.model.Image;
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 
-public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabSelectedListener, NavigationView.OnNavigationItemSelectedListener {
+import java.io.File;
+import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
+public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabSelectedListener, NavigationView.OnNavigationItemSelectedListener,ServerResponse {
     DrawerLayout mDrawerLayout;
-
+    private static final int PICK_IMAGE = 103;
     NavigationView navigationView;
 
     TabLayout tabs;
@@ -40,6 +59,8 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
     PreferenceManger preferenceManger;
 
     TextView tvCreditLimt, tvUserLimit, tvRemainingLimit, tvCartCount;
+
+    CircleImageView img_user_profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +88,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
         View view = navigationView.getHeaderView(0);
         AppCompatTextView userName = view.findViewById(R.id.username);
+        img_user_profile=view.findViewById(R.id.img_user_profile);
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -85,7 +107,9 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         }
 
         if (preferenceManger != null)
+        {
             userName.setText(preferenceManger.getString(PrefKeys.USERNAME));
+        }
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(FragmentProductList.intantiateList("product_shirt"), "Shirt");
@@ -97,6 +121,13 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         viewpager.setPageTransformer(false, new CustPagerTransformer(MainActivity.this));
         viewpager.setAdapter(adapter);
         tabs.setupWithViewPager(viewpager);
+
+        img_user_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imgePicker();
+            }
+        });
 
     }
 
@@ -225,5 +256,83 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         if (tv.getVisibility() == View.VISIBLE)
             tv.setVisibility(View.INVISIBLE);
         else tv.setVisibility(View.VISIBLE);
+    }
+
+    private void imgePicker() {
+        ImagePicker.with(this)                         //  Initialize ImagePicker with activity or fragment context
+                .setMultipleMode(true)              //  Select multiple images or single image
+                .setFolderMode(true)                //  Folder mode
+                .setMaxSize(1)//  Max images can be selected
+                .setShowCamera(false)
+                .setDoneTitle("Accept")
+                .setSavePath("Arropa")
+                .start();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Config.RC_PICK_IMAGES && resultCode == RESULT_OK && data != null) {
+            ArrayList<Image> images = data.getParcelableArrayListExtra(Config.EXTRA_IMAGES);
+            if (images != null && images.size() > 0) {
+
+                File img=new File(images.get(0).getPath());
+                if (img.exists())
+                {
+                  img_user_profile.setImageURI(Uri.fromFile(img));
+                   uploadPhotos(images.get(0).getPath());
+                }
+                else {
+                  /*  String path= Environment.getExternalStorageDirectory().getPath();
+                    img=new File(path+"/Pictures/Buahh/" + images.get(0).getName());
+                    if (img.exists())
+                        uploadPhotos(images.get(0).getName());
+                    else Toast.makeText(getApplicationContext(),"Internal Error",Toast.LENGTH_SHORT).show();*/
+
+
+                }
+
+            }
+
+        }
+
+    }
+
+    private void uploadPhotos(String path) {
+
+        new Requestor(Constant.UPLOAD_PROFILE_PHOTO, MainActivity.this)
+                .uloadPhoto(getRequestBody(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID)),
+                        prepareFilePart("orignal parameter name", new File(path)));
+
+    }
+
+    @NonNull
+    private RequestBody getRequestBody(String value) {
+        return RequestBody.create(MultipartBody.FORM, value);
+    }
+
+    @NonNull
+    private MultipartBody.Part prepareFilePart(String partName, File file) {
+        // create RequestBody instance from file
+        if (file == null) return null;
+        RequestBody requestFile =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"),
+                        file
+                );
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+
+    @Override
+    public void success(Object o, int code) {
+
+    }
+
+    @Override
+    public void error(Object o, int code) {
+
     }
 }

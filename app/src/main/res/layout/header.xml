@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:background="@color/darkPink"
     android:layout_height="150dp">
@@ -11,7 +13,7 @@
         android:layout_marginBottom="5dp"
         android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_user_profile"
             android:layout_width="96dp"
             android:layout_height="96dp"
@@ -19,8 +21,10 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="4dp"
-            android:scaleType="centerCrop"
             android:src="@drawable/dummy_user"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/darkPink"/>
+
             />
 
 

@@ -103,6 +103,7 @@ String id;
         buyNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(ActivityProductDetails.this,ActivityCart.class));
                 // Utility.showToast(ActivityProductDetails.this,"");
             }
         });

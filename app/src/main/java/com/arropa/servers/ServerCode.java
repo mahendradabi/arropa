@@ -21,6 +21,8 @@ public interface ServerCode {
    int STATE_LIST=8;
    int GET_PROFILE=9;
    int UPDATE_PROFILE=10;
+   int UPLOAD_PROFILE_PHOTO = 11;
+
 
 
 

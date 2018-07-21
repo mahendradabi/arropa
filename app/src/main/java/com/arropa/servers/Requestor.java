@@ -9,6 +9,8 @@ import com.arropa.models.ProfileDetails;
 import com.arropa.models.StateList;
 import com.arropa.models.Statedetail;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -232,6 +234,22 @@ public class Requestor {
     {
         apis.updateProfile(name,shopName,addhar,shopaddress,resAddress,city,state,
                 pincode,password,vendermobile,uid).enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                if (response.code() == 200 && response.body() != null)
+                    serverResponse.success(response.body(), code);
+                else serverResponse.error("Error", code);
+            }
+
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+                serverResponse.error(t.getMessage(), code);
+            }
+        });
+    }
+
+    public void uloadPhoto(RequestBody userid, MultipartBody.Part photo) {
+        apis.uploadPhoto(userid, photo).enqueue(new Callback<MyResponse>() {
             @Override
             public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                 if (response.code() == 200 && response.body() != null)
