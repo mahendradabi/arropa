@@ -10,11 +10,16 @@ import android.widget.LinearLayout;
 
 import com.arropa.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
     Context mContex;
-
+List<String> test=new ArrayList<>();
     public CartAdapter(Context mContex) {
         this.mContex = mContex;
+        for (int i=0;i<10;i++)
+            test.add(""+i);
     }
 
     @NonNull
@@ -26,21 +31,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+            holder.ll_remove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    test.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,test.size());
+                }
+            });
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return test.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout ll_item;
+        LinearLayout ll_remove;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-           // ll_item = itemView.findViewById(R.id.ll_item);
+           ll_remove = itemView.findViewById(R.id.ll_remove);
         }
     }
 

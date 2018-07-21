@@ -145,16 +145,8 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.filter:
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Choose category")
-                        .setItems(R.array.options, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // The 'which' argument contains the index position
-                                // of the selected item
-                            }
-                        });
-                builder.create().show();
+            case R.id.notification:
+                startActivity(new Intent(MainActivity.this, ActivityNotification.class));
                 break;
 
             case R.id.cart:

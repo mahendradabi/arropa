@@ -10,6 +10,7 @@
     app:cardCornerRadius="4dp">
 
     <LinearLayout
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -57,62 +58,16 @@
                     android:layout_height="wrap_content"
                     android:text="Delivery Charge: Free" />
 
-                <LinearLayout
-                    android:layout_marginTop="5dp"
+                <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.AppCompatButton
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/inverse_button"
-                        android:text="-"
-                        android:textColor="@color/white" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="10"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:textStyle="bold" />
-
-                    <android.support.v7.widget.AppCompatButton
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/inverse_button"
-                        android:text="+"
-                        android:textColor="@color/white" />
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="A shirt is a cloth garment for the upper body" />
             </LinearLayout>
 
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/cardview_dark_background" />
-
-        <LinearLayout
-            android:id="@+id/ll_remove"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Remove"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
 
 
     </LinearLayout>
