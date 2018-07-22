@@ -1,11 +1,13 @@
 package com.arropa.servers;
 
 
+import com.arropa.models.CartList;
 import com.arropa.models.CityList;
 import com.arropa.models.LoginModel;
 import com.arropa.models.MyResponse;
 import com.arropa.models.ProductList;
 import com.arropa.models.ProfileDetails;
+import com.arropa.models.ProfileImgModel;
 import com.arropa.models.StateList;
 import com.arropa.models.Statedetail;
 
@@ -15,6 +17,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Field;
+import retrofit2.http.PUT;
 
 /**
  * Created by xyz on 03-01-2018.
@@ -144,6 +147,24 @@ public class Requestor {
     public void getCartList(String userID)
     {
         apis.getCartList(userID)
+                .enqueue(new Callback<CartList>() {
+                    @Override
+                    public void onResponse(Call<CartList> call, Response<CartList> response) {
+                        if (response.code() == 200 && response.body() != null)
+                            serverResponse.success(response.body(), code);
+                        else serverResponse.error("Error", code);
+                    }
+
+                    @Override
+                    public void onFailure(Call<CartList> call, Throwable t) {
+                        serverResponse.error(t.getMessage(), code);
+                    }
+                });
+    }
+
+    public void removeFavorite(String fid)
+    {
+        apis.removeFavorite(fid)
                 .enqueue(new Callback<MyResponse>() {
                     @Override
                     public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
@@ -158,10 +179,9 @@ public class Requestor {
                     }
                 });
     }
-
-    public void removeFavorite(String userId,String pid)
+ public void removeProduct(String oid)
     {
-        apis.removeFavorite(userId,pid)
+        apis.removeProduct(oid)
                 .enqueue(new Callback<MyResponse>() {
                     @Override
                     public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
@@ -262,5 +282,74 @@ public class Requestor {
                 serverResponse.error(t.getMessage(), code);
             }
         });
+    }
+
+    public void minusQty(String orderId)
+    {
+        apis.minusOrder(orderId).enqueue(new Callback<CartList>() {
+            @Override
+            public void onResponse(Call<CartList> call, Response<CartList> response) {
+                if (response.code() == 200 && response.body() != null)
+                    serverResponse.success(response.body(), code);
+                else serverResponse.error("Error", code);
+            }
+
+            @Override
+            public void onFailure(Call<CartList> call, Throwable t) {
+                serverResponse.error(t.getMessage(), code);
+            }
+        });
+    }
+
+    public void plusQty(String orderId)
+    {
+        apis.plusOrder(orderId).enqueue(new Callback<CartList>() {
+            @Override
+            public void onResponse(Call<CartList> call, Response<CartList> response) {
+                if (response.code() == 200 && response.body() != null)
+                    serverResponse.success(response.body(), code);
+                else serverResponse.error("Error", code);
+            }
+
+            @Override
+            public void onFailure(Call<CartList> call, Throwable t) {
+                serverResponse.error(t.getMessage(), code);
+            }
+        });
+    }
+
+    public void placeOrder(String uid)
+    {
+        apis.placeOrder(uid).enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                if (response.code() == 200 && response.body() != null)
+                    serverResponse.success(response.body(), code);
+                else serverResponse.error("Error", code);
+            }
+
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+                serverResponse.error(t.getMessage(), code);
+            }
+        });
+    }
+
+    public void getProfilePhoto(String uid)
+    {
+        apis.getImage(uid)
+                .enqueue(new Callback<ProfileImgModel>() {
+                    @Override
+                    public void onResponse(Call<ProfileImgModel> call, Response<ProfileImgModel> response) {
+                        if (response.code() == 200 && response.body() != null)
+                            serverResponse.success(response.body(), code);
+                        else serverResponse.error("Error", code);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProfileImgModel> call, Throwable t) {
+                        serverResponse.error(t.getMessage(), code);
+                    }
+                });
     }
 }

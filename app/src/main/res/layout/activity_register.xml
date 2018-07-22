@@ -116,6 +116,7 @@
                     android:layout_height="wrap_content"
                     android:hint="State"
                     android:inputType="text"
+                    android:entries="@array/state"
                     android:textSize="14sp" />
                 </LinearLayout>
 

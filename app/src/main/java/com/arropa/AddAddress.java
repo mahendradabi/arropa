@@ -142,7 +142,8 @@ public class AddAddress extends AppCompatActivity implements ServerResponse {
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPayment();
+                startActivity(new Intent(AddAddress.this,ActivityPaymentOptions.class));
+                finish();
             }
         });
     }
@@ -223,15 +224,7 @@ public class AddAddress extends AppCompatActivity implements ServerResponse {
         return true;
     }
 
-    private void openPayment() {
 
-        Intent intent = new Intent(AddAddress.this, PayMentGateWay.class);
-        intent.putExtra("FIRST_NAME", "Arropa testing Payment");
-        intent.putExtra("PHONE_NUMBER", "1234567890");
-        intent.putExtra("EMAIL_ADDRESS", "test@gmail.com");
-        intent.putExtra("RECHARGE_AMT", String.valueOf(100));
-        startActivity(intent);
-    }
 
     @Override
     public void success(Object o, int code) {

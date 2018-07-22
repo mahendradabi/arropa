@@ -69,6 +69,7 @@
                     android:icon="@drawable/vc_faq"
                     android:title="FAQ" />
                 <item
+                    android:id="@+id/retrunt"
                     android:icon="@drawable/vc_return"
                     android:title="Returns" />
                 <item

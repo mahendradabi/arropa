@@ -10,5 +10,7 @@
         <item>Other</item>
     </string-array>
 
-  
+  <string-array name="state">
+      <item>Select State</item>
+  </string-array>
 </resources>

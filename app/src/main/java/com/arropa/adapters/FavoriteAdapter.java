@@ -1,5 +1,6 @@
 package com.arropa.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -21,7 +22,9 @@ import com.arropa.servers.Requestor;
 import com.arropa.servers.ServerResponse;
 import com.arropa.sharedpreference.PrefKeys;
 import com.arropa.sharedpreference.PreferenceManger;
+import com.arropa.utils.DialogWindow;
 import com.arropa.utils.Utility;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -31,6 +34,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
     List<ProductModel> list;
     ItemRemoved removed;
 
+    ProgressDialog dialog;
+    int removedPosition;
+
     public interface ItemRemoved {
         public void itemRemoved();
     }
@@ -39,6 +45,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
         this.mContex = mContex;
         this.list = list;
         this.removed = removed;
+        dialog= DialogWindow.showProgressDialog(mContex,"Favorite","Removing Product from favorite list.");
+        dialog.setCancelable(false);
 
     }
 
@@ -57,20 +65,31 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
         holder.tvName.setText(productModel.getProductName());
         holder.tvDes.setText(productModel.getProductDesc());
 
+        Picasso.get().load(Constant.IMAGEPATH+productModel.getImages())
+                .error(R.drawable.shirt)
+                .placeholder(R.drawable.shirt)
+                .into(holder.imageView);
+
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mContex.startActivity(new Intent(mContex, ActivityProductDetails.class)
                         .putExtra("product", list.get(position))
                 );
             }
         });
-        holder.favorite.setVisibility(View.GONE);
+        holder.favorite.setVisibility(View.VISIBLE);
         holder.favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Requestor(Constant.REMOVE_FAVORITE, FavoriteAdapter.this)
-                        .removeFavorite(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID), list.get(position).getProdId());
+                if (list.size()>0)
+                {
+                    dialog.show();
+                    removedPosition=position;
+                    new Requestor(Constant.REMOVE_FAVORITE, FavoriteAdapter.this)
+                            .removeFavorite(list.get(position).getFevId());
+                }
             }
         });
     }
@@ -82,10 +101,15 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
 
     @Override
     public void success(Object o, int code) {
+        dialog.dismiss();
         if (code == Constant.REMOVE_FAVORITE) {
             MyResponse response = (MyResponse) o;
             if (response != null) {
                 if (response.isStatus()) {
+                    list.remove(removedPosition);
+                    notifyItemRemoved(removedPosition);
+                    notifyItemRangeChanged(removedPosition,list.size());
+                    if (list.size()==0)
                     removed.itemRemoved();
                 }
                 Utility.showToast(mContex, response.getMessage());
@@ -95,13 +119,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
 
     @Override
     public void error(Object o, int code) {
+        dialog.dismiss();
         Utility.showToast(mContex, o.toString());
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout ll_item;
         AppCompatTextView tvName, tvPrice, tvDes;
-        AppCompatImageView favorite;
+        AppCompatImageView favorite,imageView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -110,6 +135,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvDes = itemView.findViewById(R.id.tvDes);
             favorite = itemView.findViewById(R.id.removeFavorite);
+            imageView = itemView.findViewById(R.id.post_img);
         }
     }
 }

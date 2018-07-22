@@ -8,7 +8,7 @@ import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActivityContactUs extends MyAbstractActivity {
+public  class ActivityContactUs extends MyAbstractActivity {
 @BindView(R.id.toolbar)
 Toolbar toolbar;
 @BindView(R.id.submit)

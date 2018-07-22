@@ -3,6 +3,7 @@ package com.arropa.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.arropa.ActivityProductDetails;
 import com.arropa.R;
 import com.arropa.models.ProductModel;
 import com.arropa.servers.Constant;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -50,6 +52,12 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             );
             }
         });
+
+        Picasso.get()
+                .load(Constant.IMAGEPATH+productModel.getImages())
+                .placeholder(R.drawable.shirt)
+                .error(R.drawable.shirt)
+                .into(holder.imageView);
     }
 
     @Override
@@ -59,6 +67,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout ll_item;
+        AppCompatImageView imageView;
         AppCompatTextView tvName,tvPrice,tvDes;
 
         public MyViewHolder(View itemView) {
@@ -67,6 +76,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             tvName=itemView.findViewById(R.id.tvname);
             tvPrice=itemView.findViewById(R.id.tvPrice);
             tvDes=itemView.findViewById(R.id.tvDes);
+            imageView=itemView.findViewById(R.id.post_img);
         }
     }
 }

@@ -28,6 +28,9 @@
         <activity android:name=".ReadPrivacy"/>
         <activity android:name=".AddressBookActivity"/>
         <activity android:name=".AddAddress"/>
+        <activity android:name=".ActivityContactUs"
+            />
+        <activity android:name=".ActivityPaymentOptions"/>
         <activity android:name=".payment.PayMentGateWay"/>
         <activity android:name=".FavoriteList"/>
         <activity android:name=".MyOrderList"/>

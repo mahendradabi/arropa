@@ -2,10 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
-
+    <FrameLayout
+        android:layout_above="@id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="@style/Base.Widget.AppCompat.ProgressBar"/>
     <com.arropa.customviews.AutofitRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -13,5 +24,28 @@
         android:clipToPadding="false"
         android:columnWidth="150dp"
         android:padding="5dp" />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_empty"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_favorite_filled_black_24dp"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Your favorite list is empty !"/>
+
+
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>

@@ -19,7 +19,7 @@
             android:id="@+id/post_img"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/shirt" />
 
         <LinearLayout

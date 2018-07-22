@@ -7,4 +7,5 @@ package com.arropa;
 public abstract class MyAbstractActivity extends BaseActivity {
     public abstract void initViews();
     public abstract void initListeners();
+
 }

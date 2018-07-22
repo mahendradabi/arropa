@@ -26,9 +26,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arropa.adapters.CartAdapter;
 import com.arropa.adapters.ViewPagerAdapter;
 import com.arropa.customviews.CustPagerTransformer;
+import com.arropa.models.CartList;
+import com.arropa.models.CartModel;
 import com.arropa.models.MyResponse;
+import com.arropa.models.PictureModel;
+import com.arropa.models.ProfileImgModel;
 import com.arropa.servers.Constant;
 import com.arropa.servers.Requestor;
 import com.arropa.servers.ServerCode;
@@ -41,9 +46,11 @@ import com.nguyenhoanglam.imagepicker.helper.PreferenceHelper;
 import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
@@ -138,11 +145,25 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
             }
         });
 
+        getCartSize();
+        getProfileImage();
+
+    }
+
+    private void getProfileImage() {
+        new Requestor(Constant.GETPROFILEPHOTO, this)
+                .getProfilePhoto(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID));
     }
 
     @Override
     public void initListeners() {
 
+    }
+
+    private void getCartSize() {
+        new Requestor(Constant.GET_CART_LIST, this).getCartList(
+                PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID)
+        );
     }
 
 
@@ -169,7 +190,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         RelativeLayout v = (RelativeLayout) MenuItemCompat.getActionView(item);
         tvCartCount = (TextView) v.findViewById(R.id.cart_item_count);
 
-        if (tvCartCount != null) tvCartCount.setText("10");
+        if (tvCartCount != null) tvCartCount.setText("0");
         v.findViewById(R.id.cartimage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,6 +205,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
             case R.id.notification:
                 startActivity(new Intent(MainActivity.this, ActivityNotification.class));
                 break;
@@ -208,9 +230,25 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
                 break;
             case R.id.myprofile:
                 startActivity(new Intent(MainActivity.this, MyProfile.class));
+                mDrawerLayout.closeDrawer(Gravity.START);
+
                 break;
             case R.id.termsConditions:
-                startActivity(new Intent(MainActivity.this, ReadPrivacy.class));
+                startActivity(new Intent(MainActivity.this, ReadPrivacy.class).putExtra("url", 1));
+                mDrawerLayout.closeDrawer(Gravity.START);
+
+                break;
+
+            case R.id.faq:
+                startActivity(new Intent(MainActivity.this, ReadPrivacy.class).putExtra("url", 2));
+                mDrawerLayout.closeDrawer(Gravity.START);
+
+                break;
+
+            case R.id.retrunt:
+                startActivity(new Intent(MainActivity.this, ReadPrivacy.class).putExtra("url", 3));
+                mDrawerLayout.closeDrawer(Gravity.START);
+
                 break;
 
             case R.id.useLimit:
@@ -226,17 +264,25 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
             case R.id.favorite:
                 startActivity(new Intent(MainActivity.this, FavoriteList.class));
+                mDrawerLayout.closeDrawer(Gravity.START);
+
                 break;
 
             case R.id.orders:
                 startActivity(new Intent(MainActivity.this, MyOrderList.class));
+                mDrawerLayout.closeDrawer(Gravity.START);
+
                 break;
 
             case R.id.mycart:
                 startActivity(new Intent(MainActivity.this, ActivityCart.class));
+                mDrawerLayout.closeDrawer(Gravity.START);
+
                 break;
             case R.id.contactus:
-                startActivity(new Intent(MainActivity.this,ActivityContactUs.class));
+                startActivity(new Intent(MainActivity.this, ActivityContactUs.class));
+                mDrawerLayout.closeDrawer(Gravity.START);
+
                 break;
         }
         return true;
@@ -338,17 +384,52 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
     @Override
     public void success(Object o, int code) {
         if (dialog != null && dialog.isShowing()) dialog.dismiss();
-        if (code==Constant.UPLOAD_PROFILE_PHOTO)
-        {
-            MyResponse response=(MyResponse)o;
-            if (response!=null&&response.getMessage()!=null)
-                Utility.showToast(MainActivity.this,response.getMessage());
+        switch (code) {
+            case Constant.GET_CART_LIST:
+                CartList cartList = (CartList) o;
+                if (cartList != null && cartList.isStatus()) {
+                    List<CartModel> details = cartList.getDetails();
+                    if (details != null) {
+                        tvCartCount.setText(details.size() + "");
+                    }
 
+                } else tvCartCount.setText("0");
+                break;
+
+            case Constant.UPLOAD_PROFILE_PHOTO:
+                MyResponse response = (MyResponse) o;
+                if (response != null && response.getMessage() != null)
+                    Utility.showToast(MainActivity.this, response.getMessage());
+                if (response.isStatus())
+                    getProfileImage();
+                break;
+
+            case Constant.GETPROFILEPHOTO:
+                ProfileImgModel imgModel = (ProfileImgModel) o;
+                if (imgModel.isStatus()) {
+                    List<PictureModel> picture = imgModel.getPicture();
+                    if (picture != null && picture.size() == 1) {
+                        Picasso.get().load(Constant.IMAGEPATH + picture.get(0).getPhoto())
+                                .error(R.drawable.dummy_user)
+                                .placeholder(R.drawable.dummy_user)
+                                .into(img_user_profile);
+                    }
+
+
+                }
+                break;
         }
+
     }
 
     @Override
     public void error(Object o, int code) {
         if (dialog != null && dialog.isShowing()) dialog.dismiss();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getCartSize();
     }
 }

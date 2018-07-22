@@ -3,25 +3,33 @@ package com.arropa.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class ProductModel implements Serializable{
-    @SerializedName("fev_id")
+public class CartModel {
+    @SerializedName("total_amount")
     @Expose
-    private String fevId;
+    private String total;
 
-    @SerializedName("prod_id")
+    @SerializedName("amount")
     @Expose
-    private String prodId;
+    private String amount;
+
+    @SerializedName("order_no")
+    @Expose
+    private String orderNo;
+    @SerializedName("vendor_id")
+    @Expose
+    private String vendorId;
+    @SerializedName("product_id")
+    @Expose
+    private String productId;
+    @SerializedName("qty")
+    @Expose
+    private String qty;
     @SerializedName("product_name")
     @Expose
     private String productName;
     @SerializedName("product_price")
     @Expose
     private String productPrice;
-    @SerializedName("Alot_no")
-    @Expose
-    private String alotNo;
     @SerializedName("product_desc")
     @Expose
     private String productDesc;
@@ -31,24 +39,37 @@ public class ProductModel implements Serializable{
     @SerializedName("images")
     @Expose
     private String images;
-    @SerializedName("status")
-    @Expose
-    private String status;
 
-    public String getFevId() {
-        return fevId;
+    public String getOrderNo() {
+        return orderNo;
     }
 
-    public void setFevId(String fevId) {
-        this.fevId = fevId;
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
-    public String getProdId() {
-        return prodId;
+    public String getVendorId() {
+        return vendorId;
     }
 
-    public void setProdId(String prodId) {
-        this.prodId = prodId;
+    public void setVendorId(String vendorId) {
+        this.vendorId = vendorId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getQty() {
+        return qty;
+    }
+
+    public void setQty(String qty) {
+        this.qty = qty;
     }
 
     public String getProductName() {
@@ -65,14 +86,6 @@ public class ProductModel implements Serializable{
 
     public void setProductPrice(String productPrice) {
         this.productPrice = productPrice;
-    }
-
-    public String getAlotNo() {
-        return alotNo;
-    }
-
-    public void setAlotNo(String alotNo) {
-        this.alotNo = alotNo;
     }
 
     public String getProductDesc() {
@@ -99,13 +112,19 @@ public class ProductModel implements Serializable{
         this.images = images;
     }
 
-    public String getStatus() {
-        return status;
+    public String getTotal() {
+        return total;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }
-
-

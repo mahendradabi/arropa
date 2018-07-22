@@ -7,9 +7,6 @@ package com.arropa.servers;
 
 public interface ServerCode {
    //constant server keys
-   String FOR_SALE="for sale";
-   String FOR_RENT="for rent";
-
 
    int LOGIN_CODE=1;
    int REGISTER_CODE=2;
@@ -22,6 +19,10 @@ public interface ServerCode {
    int GET_PROFILE=9;
    int UPDATE_PROFILE=10;
    int UPLOAD_PROFILE_PHOTO = 11;
+   int GET_CART_LIST=12;
+   int UPDATE_QTY=13;
+   int PLACE_ORDER=14;
+   int GETPROFILEPHOTO=15;
 
 
 

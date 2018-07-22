@@ -24,7 +24,7 @@
                 android:id="@+id/post_img"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:scaleType="centerInside"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/shirt" />
 
             <LinearLayout
@@ -44,6 +44,7 @@
 
 
                 <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tvPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -63,6 +64,7 @@
                     android:layout_height="wrap_content">
 
                     <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/btnPlus"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/inverse_button"
@@ -70,15 +72,17 @@
                         android:textColor="@color/white" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tvqty"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="10"
+                        android:text=""
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:textStyle="bold" />
 
                     <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/btnMinus"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/inverse_button"

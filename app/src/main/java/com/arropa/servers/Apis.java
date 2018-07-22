@@ -4,6 +4,7 @@ package com.arropa.servers;
  * all method declare to access the api form backend side
  * */
 
+import com.arropa.models.CartList;
 import com.arropa.models.CityList;
 import com.arropa.models.Citydetail;
 import com.arropa.models.LoginModel;
@@ -11,6 +12,7 @@ import com.arropa.models.LoginUserDetails;
 import com.arropa.models.MyResponse;
 import com.arropa.models.ProductList;
 import com.arropa.models.ProfileDetails;
+import com.arropa.models.ProfileImgModel;
 import com.arropa.models.StateList;
 import com.arropa.models.Statedetail;
 
@@ -61,16 +63,20 @@ public interface Apis {
     Call<MyResponse> addtocart(@Field("ven_id") String id, @Field("product_id") String pid);
 
     @FormUrlEncoded
-    @POST(Constant.PATH + "product")
-    Call<MyResponse> getCartList(@Field("ven_id") String id);
+    @POST(Constant.PATH + "carthistory")
+    Call<CartList> getCartList(@Field("ven_id") String id);
 
     @FormUrlEncoded
-    @POST(Constant.PATH + "favorite")
-    Call<ProductList> getFavoriteList(@Field("p_id") String id);
+    @POST(Constant.PATH + "getFavorite")
+    Call<ProductList> getFavoriteList(@Field("ven_id") String id);
+
+    @FormUrlEncoded
+    @POST(Constant.PATH + "removeproduct")
+    Call<MyResponse> removeProduct(@Field("order_no") String oid);
 
     @FormUrlEncoded
     @POST(Constant.PATH + "removefevorite")
-    Call<MyResponse> removeFavorite(@Field("ven_id") String uid, @Field("prd_id") String pid);
+    Call<MyResponse> removeFavorite(@Field("fev_id") String fid);
 
     @GET(Constant.PATH + "state")
     Call<StateList> getStateList();
@@ -105,6 +111,25 @@ public interface Apis {
     @POST(Constant.PATH + "uploadprofile")
     Call<MyResponse> uploadPhoto(@Part("ven_id") RequestBody userId,
                                           @Part MultipartBody.Part picture);
+
+    @FormUrlEncoded
+    @POST(Constant.PATH+"minusqty")
+    Call<CartList> plusOrder(@Field("order_no") String orderno);
+
+
+    @FormUrlEncoded
+    @POST(Constant.PATH+"plusqty")
+    Call<CartList> minusOrder(@Field("order_no") String orderno);
+
+    @FormUrlEncoded
+    @POST(Constant.PATH+"placeorder")
+    Call<MyResponse> placeOrder(@Field("ven_id") String ven_id);
+
+    @FormUrlEncoded
+    @POST(Constant.PATH+"Profilepic")
+    Call<ProfileImgModel> getImage(@Field("ven_id") String uid);
+
+
 
 
 }

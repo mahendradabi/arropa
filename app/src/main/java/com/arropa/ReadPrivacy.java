@@ -1,10 +1,11 @@
 package com.arropa;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
+
+import com.arropa.servers.Constant;
 
 /**
  * Created by xyz on 24-04-2018.
@@ -28,7 +29,21 @@ public class ReadPrivacy extends MyAbstractActivity {
         showBackButton();
         webView = findViewById(R.id.webView);
 
-     webView.loadUrl("http://disharajsociety.com/arropa/term.html");
+        switch (getIntent().getIntExtra("url",0))
+        {
+            case 1:
+                webView.loadUrl("http://disharajsociety.com/arropa/term.html");
+                setTitle("Terms & Conditons");
+                break;
+            case 2:
+                webView.loadUrl("http://disharajsociety.com/arropa/faq.html");
+                setTitle("FAQ");
+                break;
+            case 3:
+                webView.loadUrl("http://disharajsociety.com/arropa/return.html");
+                setTitle("Return");
+                break;
+        }
 
     }
 

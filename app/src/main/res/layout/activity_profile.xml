@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -138,8 +139,13 @@
                     android:textSize="14sp" />
 
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    app:hintEnabled="false"
+                    app:passwordToggleEnabled="true"
+                    android:layout_height="wrap_content">
                 <EditText
-
                     android:id="@+id/etPassword"
                     style="@style/mEditText"
                     android:layout_width="match_parent"
@@ -147,6 +153,7 @@
                     android:hint="Enter Password"
                     android:inputType="textPassword"
                     android:textSize="14sp" />
+                </android.support.design.widget.TextInputLayout>
 
                 <Button
                     android:id="@+id/updateProfile"
