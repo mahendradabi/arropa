@@ -55,6 +55,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:hint="How much you want to redeem?"
                     android:textSize="14sp" />
 
@@ -85,7 +87,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:background="@color/white"
-                android:text="Rs. 1720"
+                android:text=""
                 android:textColor="@color/black" />
 
             <android.support.v7.widget.AppCompatButton

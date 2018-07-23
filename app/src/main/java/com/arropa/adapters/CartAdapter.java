@@ -28,7 +28,6 @@ import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> implements ServerResponse {
     Context mContex;
-    List<String> test = new ArrayList<>();
     List<CartModel> list;
 
     OnCartEmpty onCartEmpty;
@@ -63,25 +62,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                         try {
                             CartModel cartModel = cartList.getDetails().get(0);
                             if (cartModel != null) {
+                                onCartEmpty.onTotalChanged(cartModel.getTotal());
                                 CartModel local = list.get(removedPosition);
                                 local.setQty(cartModel.getQty());
                                 local.setAmount(cartModel.getAmount());
                                 notifyItemChanged(removedPosition);
                                 if (cartModel.getQty().equals("0")) {
                                     list.remove(removedPosition);
+
                                     notifyItemRemoved(removedPosition);
                                     notifyItemRangeChanged(removedPosition, list.size());
+
                                     if (list.size()==0)
                                         onCartEmpty.onCartEmpty();
                                 }
 
                             }
+
                         } catch (IndexOutOfBoundsException ex) {
                             ex.printStackTrace();
                         }
 
                     }
-                    Utility.showToast(mContex, cartList.getMessage());
                 }
                 break;
         }
@@ -97,6 +99,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     public interface OnCartEmpty {
         void onCartEmpty();
+        void onTotalChanged(String total);
     }
 
     public CartAdapter(Context mContex, List<CartModel> list, OnCartEmpty onCartEmpty) {

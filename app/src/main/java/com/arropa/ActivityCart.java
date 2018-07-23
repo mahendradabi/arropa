@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.arropa.adapters.CartAdapter;
 import com.arropa.models.CartList;
@@ -21,6 +22,7 @@ import com.arropa.servers.ServerResponse;
 import com.arropa.sharedpreference.PrefKeys;
 import com.arropa.sharedpreference.PreferenceManger;
 
+import java.util.Currency;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,6 +40,8 @@ public class ActivityCart extends MyAbstractActivity implements ServerResponse,C
     Button shopnow;
     @BindView(R.id.progressBar)
     ContentLoadingProgressBar progressBar;
+    @BindView(R.id.total)
+    TextView tvTotal;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,6 +100,7 @@ public class ActivityCart extends MyAbstractActivity implements ServerResponse,C
                     List<CartModel> details = cartList.getDetails();
                     if (details!=null)
                     {
+                        tvTotal.setText(Constant.CURRENCY+" "+cartList.getTotal());
                         recyclerView.setAdapter(new CartAdapter(ActivityCart.this,details,ActivityCart.this));
                             llbottom.setVisibility(View.VISIBLE);
                             llempty.setVisibility(View.GONE);
@@ -124,5 +129,8 @@ public class ActivityCart extends MyAbstractActivity implements ServerResponse,C
 
     }
 
-
+    @Override
+    public void onTotalChanged(String total) {
+        tvTotal.setText(Constant.CURRENCY+" "+total);
+    }
 }

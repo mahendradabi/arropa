@@ -28,8 +28,7 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
 
     @BindView(R.id.llShare)
     LinearLayout tvShare;
-    @BindView(R.id.llSimilar)
-    LinearLayout tvSimilar;
+
     @BindView(R.id.llFavorite)
     LinearLayout tvFavorite;
 
@@ -135,13 +134,12 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
                 MyResponse response = (MyResponse) o;
                 if (response != null) {
                     if (response.isStatus() && isBuyNowClicked) {
-                        isBuyNowClicked = false;
-                        startActivity(new Intent(ActivityProductDetails.this, ActivityCart.class));
                         return;
                     }
-
-
-                    if (response.getMessage() != null)
+                    if (isBuyNowClicked)
+                        startActivity(new Intent(ActivityProductDetails.this, ActivityCart.class));
+                    isBuyNowClicked = false;
+                    if (response.getMessage() != null&&!isBuyNowClicked)
                         Utility.showToast(ActivityProductDetails.this, response.getMessage());
 
                 }

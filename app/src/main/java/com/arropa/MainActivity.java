@@ -1,12 +1,10 @@
 package com.arropa;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -14,8 +12,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -24,9 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.arropa.adapters.CartAdapter;
 import com.arropa.adapters.ViewPagerAdapter;
 import com.arropa.customviews.CustPagerTransformer;
 import com.arropa.models.CartList;
@@ -36,13 +30,11 @@ import com.arropa.models.PictureModel;
 import com.arropa.models.ProfileImgModel;
 import com.arropa.servers.Constant;
 import com.arropa.servers.Requestor;
-import com.arropa.servers.ServerCode;
 import com.arropa.servers.ServerResponse;
 import com.arropa.sharedpreference.PrefKeys;
 import com.arropa.sharedpreference.PreferenceManger;
 import com.arropa.utils.DialogWindow;
 import com.arropa.utils.Utility;
-import com.nguyenhoanglam.imagepicker.helper.PreferenceHelper;
 import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
@@ -112,6 +104,8 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
                 findItem(R.id.useLimit));
         tvRemainingLimit = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.reamingLimit));
+
+
 
         if (tvCreditLimt != null) {
             initializeCountDrawer();
@@ -293,18 +287,20 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         //Gravity property aligns the text
         tvCreditLimt.setGravity(Gravity.CENTER_VERTICAL);
         tvCreditLimt.setTypeface(null, Typeface.BOLD);
-        tvCreditLimt.setTextColor(getResources().getColor(R.color.colorAccent));
+        tvCreditLimt.setTextColor(getResources().getColor(R.color.colorPrimary));
         tvCreditLimt.setText(Constant.CURRENCY + " " + "10000");
 
         tvUserLimit.setGravity(Gravity.CENTER_VERTICAL);
         tvUserLimit.setTypeface(null, Typeface.BOLD);
-        tvUserLimit.setTextColor(getResources().getColor(R.color.colorAccent));
+        tvUserLimit.setTextColor(getResources().getColor(R.color.colorPrimary));
         tvUserLimit.setText(Constant.CURRENCY + " " + "4000");
 
         tvRemainingLimit.setGravity(Gravity.CENTER_VERTICAL);
         tvRemainingLimit.setTypeface(null, Typeface.BOLD);
-        tvRemainingLimit.setTextColor(getResources().getColor(R.color.colorAccent));
+        tvRemainingLimit.setTextColor(getResources().getColor(R.color.colorPrimary));
         tvRemainingLimit.setText(Constant.CURRENCY + " " + "6000");
+
+
 
 
     }
@@ -391,6 +387,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
                     List<CartModel> details = cartList.getDetails();
                     if (details != null) {
                         tvCartCount.setText(details.size() + "");
+
                     }
 
                 } else tvCartCount.setText("0");

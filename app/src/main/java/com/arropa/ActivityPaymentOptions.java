@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
+import com.arropa.models.CartList;
+import com.arropa.models.CartModel;
 import com.arropa.models.MyResponse;
 import com.arropa.payment.PayMentGateWay;
 import com.arropa.servers.Constant;
@@ -20,6 +23,8 @@ import com.arropa.sharedpreference.PrefKeys;
 import com.arropa.sharedpreference.PreferenceManger;
 import com.arropa.utils.DialogWindow;
 import com.arropa.utils.Utility;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,8 +38,12 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
     CheckBox payMoney;
     @BindView(R.id.paytmWallet)
     CheckBox paytmWallet;
+    @BindView(R.id.total)
+    TextView tvTotal;
+
 
     ProgressDialog dialog;
+    String totalAmount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +63,7 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
 
         dialog = DialogWindow.showProgressDialog(ActivityPaymentOptions.this, "Payment", "Order in process please wait...");
         dialog.setCancelable(false);
-
+        getCartSize();
 
     }
 
@@ -83,10 +92,9 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
             public void onClick(View view) {
                 if (payMoney.isChecked()) {
                     placeOrder();
-                }
-                else if (paytmWallet.isChecked())
-                    Utility.showToast(ActivityPaymentOptions.this,"Paytm wallet not supported yet.");
-                else Utility.showToast(ActivityPaymentOptions.this,"Please select payment option");
+                } else if (paytmWallet.isChecked())
+                    Utility.showToast(ActivityPaymentOptions.this, "Paytm wallet not supported yet.");
+                else Utility.showToast(ActivityPaymentOptions.this, "Please select payment option");
             }
         });
     }
@@ -94,8 +102,15 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
     private void placeOrder() {
         dialog.show();
         new Requestor(Constant.PLACE_ORDER, ActivityPaymentOptions.this)
-        .placeOrder(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID));
+                .placeOrder(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID));
     }
+
+    private void getCartSize() {
+        new Requestor(Constant.GET_CART_LIST, this).getCartList(
+                PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID)
+        );
+    }
+
 
     private void openPayment() {
 
@@ -103,7 +118,7 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
         intent.putExtra("FIRST_NAME", "Arropa testing Payment");
         intent.putExtra("PHONE_NUMBER", "1234567890");
         intent.putExtra("EMAIL_ADDRESS", "test@gmail.com");
-        intent.putExtra("RECHARGE_AMT", String.valueOf(100));
+        intent.putExtra("RECHARGE_AMT", String.valueOf(totalAmount));
         startActivity(intent);
     }
 
@@ -114,8 +129,7 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
             case Constant.PLACE_ORDER:
                 MyResponse response = (MyResponse) o;
                 if (response != null) {
-                    if (response.isStatus())
-                    {
+                    if (response.isStatus()) {
                         openPayment();
                         finish();
                     }
@@ -124,6 +138,15 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
                 }
 
                 break;
+            case Constant.GET_CART_LIST:
+                CartList cartList = (CartList) o;
+                if (cartList != null && cartList.isStatus()) {
+                    totalAmount = cartList.getTotal();
+                    tvTotal.setText(Constant.CURRENCY+" "+totalAmount);
+
+                }
+                break;
+
         }
     }
 

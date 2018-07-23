@@ -55,12 +55,7 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tv_landmark_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Anand bazzar, Old palasia-Indore"
-                    android:textAllCaps="true" />
+
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_username"
@@ -146,10 +141,7 @@
                     android:hint="Add Pincode"
                     android:text="" />
 
-                <EditText
-                    android:id="@+id/landmark"
-                    style="@style/mEditText"
-                    android:hint="Add landmark" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -184,12 +176,9 @@
                     android:id="@+id/fname"
                     style="@style/mEditText"
                     android:layout_marginTop="5dp"
-                    android:hint="First Name" />
+                    android:hint="Your Name" />
 
-                <EditText
-                    android:id="@+id/lname"
-                    style="@style/mEditText"
-                    android:hint="Last Name" />
+
 
                 <EditText
                     android:id="@+id/mobile"

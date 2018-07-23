@@ -6,6 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class CartList extends MyResponse {
+    @SerializedName("total")
+    @Expose
+    private String total;
+
     @SerializedName("Details")
     @Expose
     private List<CartModel> details = null;
@@ -18,4 +22,11 @@ public class CartList extends MyResponse {
         this.details = details;
     }
 
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
 }

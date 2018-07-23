@@ -20,7 +20,6 @@ import android.widget.RelativeLayout;
 import com.arropa.models.AddressModel;
 import com.arropa.models.ProfileDetails;
 import com.arropa.models.UserDetailsModel;
-import com.arropa.payment.PayMentGateWay;
 import com.arropa.servers.Constant;
 import com.arropa.servers.Requestor;
 import com.arropa.servers.ServerResponse;
@@ -46,9 +45,9 @@ public class AddAddress extends AppCompatActivity implements ServerResponse {
 
     AppCompatButton add_address, btn_continue;
 
-    AppCompatTextView change_address, landmark_city, username, full_address, tv_mobile;
+    AppCompatTextView change_address, username, full_address, tv_mobile;
 
-    EditText zipcode, address, landmark, city, state, fname, lname, mobile;
+    EditText zipcode, address, city, state, fname, mobile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,14 +62,11 @@ public class AddAddress extends AppCompatActivity implements ServerResponse {
 
         zipcode = (EditText) findViewById(R.id.zipcode);
         address = (EditText) findViewById(R.id.address);
-        landmark = (EditText) findViewById(R.id.landmark);
         city = (EditText) findViewById(R.id.city);
         state = (EditText) findViewById(R.id.state);
         fname = (EditText) findViewById(R.id.fname);
-        lname = (EditText) findViewById(R.id.lname);
         mobile = (EditText) findViewById(R.id.mobile);
 
-        landmark_city = (AppCompatTextView) findViewById(R.id.tv_landmark_city);
         username = (AppCompatTextView) findViewById(R.id.tv_username);
         full_address = (AppCompatTextView) findViewById(R.id.tv_full_address);
         tv_mobile = (AppCompatTextView) findViewById(R.id.tv_mobile);
@@ -118,11 +114,9 @@ public class AddAddress extends AppCompatActivity implements ServerResponse {
                     AddressModel addressModel = new AddressModel();
                     addressModel.setZip_code(zipcode.getText().toString());
                     addressModel.setAddress(address.getText().toString());
-                    addressModel.setLandmark(landmark.getText().toString());
                     addressModel.setCity(city.getText().toString());
                     addressModel.setState(state.getText().toString());
                     addressModel.setFname(fname.getText().toString());
-                    addressModel.setLname(lname.getText().toString());
                     addressModel.setMobile(mobile.getText().toString());
                     String s = gson.toJson(addressModel);
                     if (s != null) {
@@ -157,11 +151,8 @@ public class AddAddress extends AppCompatActivity implements ServerResponse {
             address.setError("enter address");
             address.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(landmark.getText().toString())) {
-            landmark.setError("enter landmark");
-            landmark.requestFocus();
-            return false;
-        } else if (TextUtils.isEmpty(city.getText().toString())) {
+        }
+        else if (TextUtils.isEmpty(city.getText().toString())) {
             city.setError("enter city");
             city.requestFocus();
             return false;
@@ -170,14 +161,11 @@ public class AddAddress extends AppCompatActivity implements ServerResponse {
             state.requestFocus();
             return false;
         } else if (TextUtils.isEmpty(fname.getText().toString())) {
-            fname.setError("enter first name");
+            fname.setError("enter your name");
             fname.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(lname.getText().toString())) {
-            lname.setError("enter last name");
-            lname.requestFocus();
-            return false;
-        } else if (TextUtils.isEmpty(mobile.getText().toString())) {
+        }
+         else if (TextUtils.isEmpty(mobile.getText().toString())) {
             mobile.setError("enter mobile number");
             mobile.requestFocus();
             return false;
@@ -196,18 +184,15 @@ public class AddAddress extends AppCompatActivity implements ServerResponse {
             if (addressModel != null) {
                 zipcode.setText(addressModel.getZip_code());
                 address.setText(addressModel.getAddress());
-                landmark.setText(addressModel.getLandmark());
                 city.setText(addressModel.getCity());
                 state.setText(addressModel.getState());
                 fname.setText(addressModel.getFname());
-                lname.setText(addressModel.getLname());
                 mobile.setText(addressModel.getMobile());
 
 
-                landmark_city.setText(addressModel.getLandmark() + " - " + addressModel.getCity());
-                username.setText(addressModel.getFname() + " " + addressModel.getLname());
+                username.setText(addressModel.getFname());
                 full_address.setText(addressModel.getAddress() + ", "
-                        + addressModel.getLandmark() + ", " + addressModel.getCity() + " " + addressModel.getState() + " " + addressModel.getZip_code());
+                       + ", " + addressModel.getCity() + " " + addressModel.getState() + " " + addressModel.getZip_code());
                 tv_mobile.setText(addressModel.getMobile());
             }
         } else {
