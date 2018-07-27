@@ -12,6 +12,14 @@ import android.widget.EditText;
 
 
 import com.arropa.R;
+import com.arropa.models.MyResponse;
+import com.arropa.servers.Apis;
+import com.arropa.servers.RetrofitClient;
+
+import butterknife.internal.Utils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class DialogWindow {
@@ -46,25 +54,26 @@ public class DialogWindow {
                 String m_Text = input.getText().toString();
 
                 if (Validator.isEmailValid(m_Text)) {
-                    Utility.showToast(context,"Password reset link sent to your registered email id");
+                  //  Utility.showToast(context,"Password reset link sent to your registered email id");
                     final AlertDialog progressDialog = showForgotDialog(context);
-                  /*  RetrofitClient.getMyClient().create(Apis.class)
-                            .forgotPassword(m_Text).enqueue(new Callback<ResponseModel>() {
+               RetrofitClient.getMyClient().create(Apis.class)
+                            .forgotPassword(m_Text).enqueue(new Callback<MyResponse>() {
                         @Override
-                        public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                        public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                             progressDialog.dismiss();
                             if (response.code() == 200 && response.body() != null)
-                                Utils.showMessage(context, response.body().getMsg());
+                                Utility.showToast(context, response.body().getMessage());
 
                         }
 
                         @Override
-                        public void onFailure(Call<ResponseModel> call, Throwable t) {
+                        public void onFailure(Call<MyResponse> call, Throwable t) {
                             progressDialog.dismiss();
-                            Utils.showMessage(context, t.getMessage());
+                            Utility.showToast(context, t.getMessage());
                         }
-                    });*/
+                    });
                 }
+                else  Utility.showToast(context,"Email not valid.");
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -129,6 +129,10 @@ public interface Apis {
     @POST(Constant.PATH+"Profilepic")
     Call<ProfileImgModel> getImage(@Field("ven_id") String uid);
 
+    @FormUrlEncoded
+    @POST(Constant.PATH+"forgotpassword")
+    Call<MyResponse> forgotPassword(@Field("venderemail") String email);
+
 
 
 

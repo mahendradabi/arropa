@@ -130,6 +130,13 @@ public class ActivityCart extends MyAbstractActivity implements ServerResponse,C
     }
 
     @Override
+    public void onCartItemRemoved() {
+        new Requestor(Constant.GET_CART_LIST,this).getCartList(
+                PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID)
+        );
+    }
+
+    @Override
     public void onTotalChanged(String total) {
         tvTotal.setText(Constant.CURRENCY+" "+total);
     }

@@ -46,9 +46,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                         list.remove(removedPosition);
                         notifyItemRemoved(removedPosition);
                         notifyItemRangeChanged(removedPosition, list.size());
-
                         if (list.size() == 0)
                             onCartEmpty.onCartEmpty();
+                        else                         onCartEmpty.onCartItemRemoved();
+
 
                     }
                     Utility.showToast(mContex, response.getMessage());
@@ -100,6 +101,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     public interface OnCartEmpty {
         void onCartEmpty();
         void onTotalChanged(String total);
+        void onCartItemRemoved();
     }
 
     public CartAdapter(Context mContex, List<CartModel> list, OnCartEmpty onCartEmpty) {
