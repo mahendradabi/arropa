@@ -10,13 +10,19 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.arropa.R;
+import com.arropa.models.OrderModel;
+import com.arropa.servers.Constant;
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder>{
+import java.util.List;
+
+public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder> {
 
     Context mContext;
+    List<OrderModel> list;
 
-    public OrderAdapter(Context mContext) {
-        this.mContext=mContext;
+    public OrderAdapter(Context mContext, List<OrderModel> list) {
+        this.mContext = mContext;
+        this.list = list;
     }
 
     @Override
@@ -28,37 +34,29 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-
-        holder.order_details_ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
+        OrderModel orderModel = list.get(position);
+        if (orderModel != null) {
+            holder.total.setText(Constant.CURRENCY + " " + orderModel.getTotalAmount());
+            holder.orderid.setText("#" + orderModel.getInvoiceNo());
+        }
 
 
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        AppCompatTextView pname, pprice, deliverydate, orderdate, orderid;
-        AppCompatImageView image;
-
-        LinearLayout order_details_ll;
+        AppCompatTextView orderid, total;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            pname = itemView.findViewById(R.id.product_name);
-            deliverydate = itemView.findViewById(R.id.delivery_date);
-            pprice = itemView.findViewById(R.id.product_price);
-            orderdate = itemView.findViewById(R.id.orderdate);
             orderid = itemView.findViewById(R.id.orderid);
-            image = itemView.findViewById(R.id.image);
-            order_details_ll = itemView.findViewById(R.id.order_details_ll);
+            total = itemView.findViewById(R.id.total_amount);
+
         }
     }
 }

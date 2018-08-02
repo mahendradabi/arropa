@@ -4,12 +4,15 @@ package com.arropa.servers;
  * all method declare to access the api form backend side
  * */
 
+import com.arropa.MyOrderList;
 import com.arropa.models.CartList;
 import com.arropa.models.CityList;
 import com.arropa.models.Citydetail;
 import com.arropa.models.LoginModel;
 import com.arropa.models.LoginUserDetails;
 import com.arropa.models.MyResponse;
+import com.arropa.models.NotificationList;
+import com.arropa.models.OrderListModel;
 import com.arropa.models.ProductList;
 import com.arropa.models.ProfileDetails;
 import com.arropa.models.ProfileImgModel;
@@ -132,6 +135,13 @@ public interface Apis {
     @FormUrlEncoded
     @POST(Constant.PATH+"forgotpassword")
     Call<MyResponse> forgotPassword(@Field("venderemail") String email);
+
+    @GET(Constant.PATH+"notification")
+    Call<NotificationList> getNotificationList();
+
+    @FormUrlEncoded
+    @POST(Constant.PATH+"orderhistory")
+    Call<OrderListModel> getOrderList(@Field("ven_id")String userid);
 
 
 

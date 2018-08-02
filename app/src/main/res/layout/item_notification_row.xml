@@ -22,6 +22,7 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatImageView
+                android:visibility="gone"
                 android:id="@+id/post_img"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -44,21 +45,10 @@
                     android:textStyle="bold" />
 
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:text="\u20b9 2500"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Delivery Charge: Free" />
-
-                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_msg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"

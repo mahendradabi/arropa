@@ -1,21 +1,23 @@
 package com.arropa;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-import com.arropa.adapters.CartAdapter;
 import com.arropa.adapters.NotificationAdapter;
+import com.arropa.models.MyNotification;
+import com.arropa.models.NotificationList;
+import com.arropa.servers.Constant;
+import com.arropa.servers.Requestor;
+import com.arropa.servers.ServerResponse;
 
-import butterknife.BindView;
+import java.util.List;
+
 import butterknife.ButterKnife;
 
-public class ActivityNotification extends MyAbstractActivity {
+public class ActivityNotification extends MyAbstractActivity implements ServerResponse {
     RecyclerView recyclerView;
 
 
@@ -36,15 +38,33 @@ public class ActivityNotification extends MyAbstractActivity {
 
         ButterKnife.bind(this);
 
-
-
+        new Requestor(Constant.NOTIFICATIONLIST, this)
+                .getNotificationList();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(ActivityNotification.this));
-        recyclerView.setAdapter(new NotificationAdapter(ActivityNotification.this));
     }
 
     @Override
     public void initListeners() {
+
+    }
+
+    @Override
+    public void success(Object o, int code) {
+        switch (code) {
+            case Constant.NOTIFICATIONLIST:
+                NotificationList list = (NotificationList) o;
+                if (list != null) {
+                    List<MyNotification> details = list.getDetails();
+                    if (details != null)
+                        recyclerView.setAdapter(new NotificationAdapter(ActivityNotification.this, details));
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void error(Object o, int code) {
 
     }
 }

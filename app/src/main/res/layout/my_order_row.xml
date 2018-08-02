@@ -35,6 +35,7 @@
                 android:textStyle="bold" />
 
             <android.support.v7.widget.AppCompatTextView
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -57,6 +58,7 @@
                 android:text="#12" />
 
             <android.support.v7.widget.AppCompatTextView
+                android:visibility="gone"
                 android:id="@+id/orderdate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -78,6 +80,7 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatImageView
+                android:visibility="gone"
                 android:id="@+id/image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -92,25 +95,23 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/product_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="Dummy Product" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/total_amount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total"/>
+                    </LinearLayout>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/delivery_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="30-07-2018" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/product_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Rs. 1200" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -5,6 +5,8 @@ import com.arropa.models.CartList;
 import com.arropa.models.CityList;
 import com.arropa.models.LoginModel;
 import com.arropa.models.MyResponse;
+import com.arropa.models.NotificationList;
+import com.arropa.models.OrderListModel;
 import com.arropa.models.ProductList;
 import com.arropa.models.ProfileDetails;
 import com.arropa.models.ProfileImgModel;
@@ -351,6 +353,40 @@ public class Requestor {
                         serverResponse.error(t.getMessage(), code);
                     }
                 });
+    }
+
+    public void getNotificationList()
+    {
+        apis.getNotificationList().enqueue(new Callback<NotificationList>() {
+            @Override
+            public void onResponse(Call<NotificationList> call, Response<NotificationList> response) {
+                if (response.code() == 200 && response.body() != null)
+                    serverResponse.success(response.body(), code);
+                else serverResponse.error("Error", code);
+            }
+
+            @Override
+            public void onFailure(Call<NotificationList> call, Throwable t) {
+                serverResponse.error(t.getMessage(), code);
+            }
+        });
+    }
+
+    public void getOrderList(String userid)
+    {
+        apis.getOrderList(userid).enqueue(new Callback<OrderListModel>() {
+            @Override
+            public void onResponse(Call<OrderListModel> call, Response<OrderListModel> response) {
+                if (response.code() == 200 && response.body() != null)
+                    serverResponse.success(response.body(), code);
+                else serverResponse.error("Error", code);
+            }
+
+            @Override
+            public void onFailure(Call<OrderListModel> call, Throwable t) {
+                serverResponse.error(t.getMessage(), code);
+            }
+        });
     }
 
 }

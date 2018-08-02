@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.arropa.adapters.OrderAdapter;
+import com.arropa.models.OrderListModel;
 import com.arropa.servers.Constant;
 import com.arropa.servers.Requestor;
 import com.arropa.servers.ServerResponse;
@@ -15,7 +16,7 @@ import com.arropa.sharedpreference.PreferenceManger;
 
 import butterknife.ButterKnife;
 
-public class MyOrderList extends MyAbstractActivity implements ServerResponse{
+public class MyOrderList extends MyAbstractActivity implements ServerResponse {
     RecyclerView recyclerView;
 
     @Override
@@ -37,22 +38,27 @@ public class MyOrderList extends MyAbstractActivity implements ServerResponse{
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new OrderAdapter(MyOrderList.this));
 
 
     }
 
     @Override
     public void initListeners() {
-new Requestor(Constant.GET_PRODUCT_LIST,MyOrderList.this)
-        .getFavoriteList(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID));
+        new Requestor(Constant.GET_CART_LIST, MyOrderList.this)
+                .getOrderList(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID));
     }
 
     @Override
     public void success(Object o, int code) {
-        switch (code)
-        {
+        switch (code) {
+            case Constant.GET_CART_LIST:
+                OrderListModel model = (OrderListModel) o;
+                if (model != null) {
+                    if (model.getDetails() != null)
+                        recyclerView.setAdapter(new OrderAdapter(MyOrderList.this, model.getDetails()));
 
+                }
+                break;
 
         }
     }

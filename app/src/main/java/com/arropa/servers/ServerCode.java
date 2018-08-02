@@ -23,6 +23,7 @@ public interface ServerCode {
    int UPDATE_QTY=13;
    int PLACE_ORDER=14;
    int GETPROFILEPHOTO=15;
+   int NOTIFICATIONLIST=16;
 
 
 
