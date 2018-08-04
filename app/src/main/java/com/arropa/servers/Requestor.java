@@ -7,6 +7,7 @@ import com.arropa.models.LoginModel;
 import com.arropa.models.MyResponse;
 import com.arropa.models.NotificationList;
 import com.arropa.models.OrderListModel;
+import com.arropa.models.PayAmountModel;
 import com.arropa.models.ProductList;
 import com.arropa.models.ProfileDetails;
 import com.arropa.models.ProfileImgModel;
@@ -387,6 +388,42 @@ public class Requestor {
                 serverResponse.error(t.getMessage(), code);
             }
         });
+    }
+
+    public void finalPayment(String userid)
+    {
+        apis.finalPayment(userid)
+                .enqueue(new Callback<PayAmountModel>() {
+                    @Override
+                    public void onResponse(Call<PayAmountModel> call, Response<PayAmountModel> response) {
+                        if (response.code() == 200 && response.body() != null)
+                            serverResponse.success(response.body(), code);
+                        else serverResponse.error("Error", code);
+                    }
+
+                    @Override
+                    public void onFailure(Call<PayAmountModel> call, Throwable t) {
+                        serverResponse.error(t.getMessage(), code);
+                    }
+                });
+    }
+
+    public void orderDetails(String invoiceno)
+    {
+        apis.orderDetails(invoiceno)
+                .enqueue(new Callback<OrderListModel>() {
+                    @Override
+                    public void onResponse(Call<OrderListModel> call, Response<OrderListModel> response) {
+                        if (response.code() == 200 && response.body() != null)
+                            serverResponse.success(response.body(), code);
+                        else serverResponse.error("Error", code);
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrderListModel> call, Throwable t) {
+                        serverResponse.error(t.getMessage(), code);
+                    }
+                });
     }
 
 }

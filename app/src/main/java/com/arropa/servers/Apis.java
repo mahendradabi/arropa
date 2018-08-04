@@ -13,6 +13,7 @@ import com.arropa.models.LoginUserDetails;
 import com.arropa.models.MyResponse;
 import com.arropa.models.NotificationList;
 import com.arropa.models.OrderListModel;
+import com.arropa.models.PayAmountModel;
 import com.arropa.models.ProductList;
 import com.arropa.models.ProfileDetails;
 import com.arropa.models.ProfileImgModel;
@@ -142,6 +143,14 @@ public interface Apis {
     @FormUrlEncoded
     @POST(Constant.PATH+"orderhistory")
     Call<OrderListModel> getOrderList(@Field("ven_id")String userid);
+
+    @FormUrlEncoded
+    @POST(Constant.PATH+"finalpayment")
+    Call<PayAmountModel> finalPayment(@Field("ven_id") String ven_id);
+
+    @FormUrlEncoded
+    @POST(Constant.PATH+"orderfullhistory")
+    Call<OrderListModel> orderDetails(@Field("invoice_no") String invoicno);
 
 
 

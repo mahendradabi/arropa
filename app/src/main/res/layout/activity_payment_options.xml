@@ -11,9 +11,9 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_above="@id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/ll_bottom"
             android:layout_margin="5dp"
             android:orientation="vertical">
 
@@ -39,36 +39,77 @@
                 android:layout_marginTop="10dp"
                 android:text="Paytm Wallet" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Available credit Rs. 0.0"
-                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
-                <android.support.v7.widget.AppCompatEditText
+                <android.support.v7.widget.AppCompatTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:hint="How much you want to redeem?"
-                    android:textSize="14sp" />
+                    android:text="Total credit"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-                <Button
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_total_credit"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/inverse_button"
-                    android:text="Redeem"
-                    android:textColor="@color/white" />
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
             </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Total Order "
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_total_order"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Total Payable "
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_total_pay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -85,8 +126,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:background="@color/white"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/black" />
 

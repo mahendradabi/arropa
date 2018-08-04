@@ -64,6 +64,7 @@ public class ActivityCart extends MyAbstractActivity implements ServerResponse,C
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ActivityCart.this, AddAddress.class));
+                finish();
             }
         });
 

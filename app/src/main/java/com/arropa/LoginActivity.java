@@ -127,11 +127,14 @@ public class LoginActivity extends AppCompatActivity implements ServerResponse {
                 if (response != null) {
                     if (response.isStatus()) {
                         if (response.getUserdetail() != null && response.getUserdetail().getUserdetails() != null) {
+
                             UserDetailsModel userdetails = response.getUserdetail().getUserdetails();
                             PreferenceManger preferenceManger = PreferenceManger.getPreferenceManger();
                             preferenceManger.setString(PrefKeys.USERID,userdetails.getVenId());
                             preferenceManger.setString(PrefKeys.EMAIL, userdetails.getVenEmail());
                             preferenceManger.setString(PrefKeys.USERNAME, userdetails.getVenName());
+                            preferenceManger.setString(PrefKeys.MOBILE,userdetails.getVendermobile());
+
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         }

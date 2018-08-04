@@ -9,7 +9,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.arropa.models.MyResponse;
 import com.arropa.models.ProductModel;

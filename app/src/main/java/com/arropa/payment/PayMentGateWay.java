@@ -43,8 +43,8 @@ public class PayMentGateWay extends Activity {
 //    String merchant_key="zBxSQi"; // livewygb8V1Q
 //    String salt=""; // live 5uWH95dERX
 
-    String merchant_key = "zBxSQi"; // test
-    String salt = "ZhraT96O"; // test
+    String merchant_key = "YBoPBFfi"; //  zBxSQi
+    String salt = "R2W4utHu1k"; //  ZhraT96O
     String action1 = "";
     String base_url = "https://secure.payu.in";
     //https://secure.payu.in
@@ -95,7 +95,7 @@ public class PayMentGateWay extends Activity {
         params.put("firstname", getFirstName);
         params.put("email", getEmailAddress);
         params.put("phone", getNumber);
-        params.put("productinfo", "Recharge Wallet");
+        params.put("productinfo", "Arropa Purchase product");
         params.put("surl", SUCCESS_URL);
         params.put("furl", FAILED_URL);
         params.put("service_provider", "payu_paisa");

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.arropa.models.CartList;
 import com.arropa.models.CartModel;
 import com.arropa.models.MyResponse;
+import com.arropa.models.PayAmountModel;
+import com.arropa.models.PayModel;
 import com.arropa.payment.PayMentGateWay;
 import com.arropa.servers.Constant;
 import com.arropa.servers.Requestor;
@@ -41,6 +44,13 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
     @BindView(R.id.total)
     TextView tvTotal;
 
+    @BindView(R.id.tv_total_pay)
+    AppCompatTextView totalPay;
+    @BindView(R.id.tv_total_credit)
+    AppCompatTextView totalcredit;
+    @BindView(R.id.tv_total_order)
+    AppCompatTextView totalOrder;
+
 
     ProgressDialog dialog;
     String totalAmount;
@@ -60,9 +70,12 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
         setToolbar(toolbar);
         showBackButton();
         setTitle("Payment");
+        confirmPyament.setEnabled(false);
 
         dialog = DialogWindow.showProgressDialog(ActivityPaymentOptions.this, "Payment", "Order in process please wait...");
         dialog.setCancelable(false);
+        dialog.show();
+
         getCartSize();
 
     }
@@ -106,7 +119,7 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
     }
 
     private void getCartSize() {
-        new Requestor(Constant.GET_CART_LIST, this).getCartList(
+        new Requestor(Constant.GET_CART_LIST, this).finalPayment(
                 PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID)
         );
     }
@@ -114,12 +127,15 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
 
     private void openPayment() {
 
-        Intent intent = new Intent(ActivityPaymentOptions.this, PayMentGateWay.class);
-        intent.putExtra("FIRST_NAME", "Arropa testing Payment");
-        intent.putExtra("PHONE_NUMBER", "1234567890");
-        intent.putExtra("EMAIL_ADDRESS", "test@gmail.com");
-        intent.putExtra("RECHARGE_AMT", String.valueOf(totalAmount));
-        startActivity(intent);
+        if (totalAmount != null) {
+            PreferenceManger manger=PreferenceManger.getPreferenceManger();
+            Intent intent = new Intent(ActivityPaymentOptions.this, PayMentGateWay.class);
+          intent.putExtra("FIRST_NAME", manger.getString(PrefKeys.USERNAME));
+           intent.putExtra("PHONE_NUMBER", manger.getString(PrefKeys.MOBILE));
+            intent.putExtra("EMAIL_ADDRESS", manger.getString(PrefKeys.EMAIL));
+            intent.putExtra("RECHARGE_AMT", String.valueOf(totalAmount));
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -130,8 +146,18 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
                 MyResponse response = (MyResponse) o;
                 if (response != null) {
                     if (response.isStatus()) {
-                        openPayment();
-                        finish();
+                        if (totalAmount != null) {
+                            try {
+                                double v = Double.parseDouble(totalAmount);
+                                if (v > 0) {
+                                    openPayment();
+                                    finish();
+                                } else finish();
+                            } catch (NumberFormatException ex) {
+                                ex.printStackTrace();
+                            }
+
+                        }
                     }
 
                     Utility.showToast(ActivityPaymentOptions.this, response.getMessage());
@@ -139,12 +165,25 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
 
                 break;
             case Constant.GET_CART_LIST:
-                CartList cartList = (CartList) o;
+                PayAmountModel model = (PayAmountModel) o;
+                if (model != null) {
+                    PayModel details = model.getDetails();
+                    if (details != null) {
+                        confirmPyament.setEnabled(true);
+                        totalcredit.setText(Constant.CURRENCY + " " + details.getTotalCreaditamount());
+                        totalOrder.setText(Constant.CURRENCY + " " + details.getTotalOrderttlamount());
+                        totalPay.setText(Constant.CURRENCY + " " + details.getTotalPayamount());
+                        tvTotal.setText(Constant.CURRENCY + " " + details.getTotalPayamount());
+                        totalAmount = String.valueOf(details.getTotalPayamount());
+                    }
+                }
+
+              /*  CartList cartList = (CartList) o;
                 if (cartList != null && cartList.isStatus()) {
                     totalAmount = cartList.getTotal();
                     tvTotal.setText(Constant.CURRENCY+" "+totalAmount);
 
-                }
+                }*/
                 break;
 
         }

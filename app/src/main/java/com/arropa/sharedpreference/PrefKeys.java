@@ -6,6 +6,7 @@ public final class PrefKeys {
 
     public static String USERNAME="username";
     public static String EMAIL="email";
+    public static String MOBILE="mobile";
     public static String PROFILE="profile";
 
     public static String USERID="userid";
