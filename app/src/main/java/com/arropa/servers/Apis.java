@@ -8,6 +8,7 @@ import com.arropa.MyOrderList;
 import com.arropa.models.CartList;
 import com.arropa.models.CityList;
 import com.arropa.models.Citydetail;
+import com.arropa.models.CreditModels;
 import com.arropa.models.LoginModel;
 import com.arropa.models.LoginUserDetails;
 import com.arropa.models.MyResponse;
@@ -151,6 +152,10 @@ public interface Apis {
     @FormUrlEncoded
     @POST(Constant.PATH+"orderfullhistory")
     Call<OrderListModel> orderDetails(@Field("invoice_no") String invoicno);
+
+    @FormUrlEncoded
+    @POST(Constant.PATH+"Creaditlimit")
+    Call<CreditModels> creditDetails(@Field("ven_id") String ven_id);
 
 
 

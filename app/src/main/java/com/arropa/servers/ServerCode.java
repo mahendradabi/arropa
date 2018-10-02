@@ -24,6 +24,7 @@ public interface ServerCode {
    int PLACE_ORDER=14;
    int GETPROFILEPHOTO=15;
    int NOTIFICATIONLIST=16;
+   int CREDITLIMIT=17;
 
 
 

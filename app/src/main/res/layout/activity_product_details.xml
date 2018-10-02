@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xml:CPUTextView="http://schemas.android.com/apk/res/com.arropa.customviews.MyPageIndicator"
+
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -26,11 +28,24 @@
                 android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatImageView
+                    android:visibility="gone"
                     android:id="@+id/post_img"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/shirt" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"/>
+                <com.arropa.customviews.MyPageIndicator
+                    android:id="@+id/piv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:piv_width="9dp"
+                    app:piv_height="9dp"
+                    app:piv_spaceBetweenDot="2dp"
+                    />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/producttvname"
@@ -40,14 +55,28 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/producttvPrice"
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Rs. 1,999"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/producttvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="\u20b9 2500"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tvPriceDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="wrap_content"
+                        android:text="\u20b9 2500"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -157,12 +186,19 @@
                     android:textSize="16sp" />
 
                 <android.support.v7.widget.AppCompatTextView
+                    android:visibility="visible"
                     android:id="@+id/producttvDes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Regular fit, full sleeve"
                     android:textColor="@color/black" />
+
+                <WebView
+                    android:visibility="gone"
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></WebView>
 
 
             </LinearLayout>

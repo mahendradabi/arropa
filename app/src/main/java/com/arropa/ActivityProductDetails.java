@@ -1,15 +1,21 @@
 package com.arropa;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 
+import com.arropa.adapters.SliderPagerAdapter;
+import com.arropa.customviews.MyPageIndicator;
 import com.arropa.models.MyResponse;
 import com.arropa.models.ProductModel;
 import com.arropa.servers.Constant;
@@ -23,7 +29,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActivityProductDetails extends MyAbstractActivity implements ServerResponse {
+public class ActivityProductDetails extends MyAbstractActivity implements ServerResponse,ViewPager.OnPageChangeListener {
 
     @BindView(R.id.llShare)
     LinearLayout tvShare;
@@ -35,6 +41,8 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
     AppCompatTextView tvName;
     @BindView(R.id.producttvPrice)
     AppCompatTextView tvPrice;
+    @BindView(R.id.tvPriceDiscount)
+    AppCompatTextView tvPriceDiscount;
     @BindView(R.id.producttvDes)
     AppCompatTextView tvDesc;
 
@@ -48,6 +56,16 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
     String id;
 
     boolean isBuyNowClicked;
+
+    @BindView(R.id.webView)
+    WebView webView;
+
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+    @BindView(R.id.piv)
+    MyPageIndicator piv;
+
+    SliderPagerAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,19 +84,47 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
 
         ButterKnife.bind(this);
 
+
+
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("product")) {
             ProductModel productModel = (ProductModel) intent.getSerializableExtra("product");
             if (productModel != null) {
                 id = productModel.getProdId();
                 tvName.setText(productModel.getProductName());
-                tvPrice.setText(Constant.CURRENCY + " " + productModel.getProductPrice());
-                tvDesc.setText(productModel.getProductDesc());
-                Picasso.get()
-                        .load(Constant.IMAGEPATH + productModel.getImages())
-                        .error(R.drawable.shirt)
-                        .placeholder(R.drawable.shirt)
-                        .into(imageView);
+                tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                tvPriceDiscount.setText(Constant.CURRENCY+" "+productModel.getDiscount_price());
+
+
+                tvDesc.setText(Html.fromHtml(productModel.getProductDesc()));
+             //   webView.loadData(productModel.getProductDesc(),"text/html","UTF-8");
+
+                try {
+                    String img = productModel.getImages();
+                    if (img!=null)
+
+                    {
+                        String[] split = img.split(",");
+                        if (split!=null&&split.length>0) {
+                            Picasso.get()
+                                    .load(Constant.IMAGEPATH + split[0])
+                                    .placeholder(R.drawable.shirt)
+                                    .error(R.drawable.shirt)
+                                    .into(imageView);
+                            viewPagerAdapter = new SliderPagerAdapter(ActivityProductDetails.this,split);
+                            piv.setIndicator(viewPagerAdapter.getCount());
+                            viewPager.addOnPageChangeListener(this);
+                            viewPager.setAdapter(viewPagerAdapter);
+
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
             }
         }
 
@@ -148,6 +194,22 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
 
     @Override
     public void error(Object o, int code) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (piv!=null)
+            piv.setSelectedPage(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
     }
 }

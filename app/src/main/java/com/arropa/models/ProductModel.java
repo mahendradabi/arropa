@@ -19,6 +19,16 @@ public class ProductModel implements Serializable{
     @SerializedName("product_price")
     @Expose
     private String productPrice;
+
+    @SerializedName("discount_price")
+    @Expose
+    private String discount_price;
+
+    @SerializedName("final_view_price")
+    @Expose
+    private String final_view_price;
+
+
     @SerializedName("Alot_no")
     @Expose
     private String alotNo;
@@ -105,6 +115,22 @@ public class ProductModel implements Serializable{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDiscount_price() {
+        return discount_price;
+    }
+
+    public void setDiscount_price(String discount_price) {
+        this.discount_price = discount_price;
+    }
+
+    public String getFinal_view_price() {
+        return final_view_price;
+    }
+
+    public void setFinal_view_price(String final_view_price) {
+        this.final_view_price = final_view_price;
     }
 }
 

@@ -3,6 +3,7 @@ package com.arropa.servers;
 
 import com.arropa.models.CartList;
 import com.arropa.models.CityList;
+import com.arropa.models.CreditModels;
 import com.arropa.models.LoginModel;
 import com.arropa.models.MyResponse;
 import com.arropa.models.NotificationList;
@@ -13,6 +14,8 @@ import com.arropa.models.ProfileDetails;
 import com.arropa.models.ProfileImgModel;
 import com.arropa.models.StateList;
 import com.arropa.models.Statedetail;
+import com.arropa.sharedpreference.PrefKeys;
+import com.arropa.sharedpreference.PreferenceManger;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -421,6 +424,24 @@ public class Requestor {
 
                     @Override
                     public void onFailure(Call<OrderListModel> call, Throwable t) {
+                        serverResponse.error(t.getMessage(), code);
+                    }
+                });
+    }
+
+    public void getCreditDetails()
+    {
+        apis.creditDetails(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID))
+                .enqueue(new Callback<CreditModels>() {
+                    @Override
+                    public void onResponse(Call<CreditModels> call, Response<CreditModels> response) {
+                        if (response.code() == 200 && response.body() != null)
+                            serverResponse.success(response.body(), code);
+                        else serverResponse.error("Error", code);
+                    }
+
+                    @Override
+                    public void onFailure(Call<CreditModels> call, Throwable t) {
                         serverResponse.error(t.getMessage(), code);
                     }
                 });

@@ -128,10 +128,10 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
     private void openPayment() {
 
         if (totalAmount != null) {
-            PreferenceManger manger=PreferenceManger.getPreferenceManger();
+            PreferenceManger manger = PreferenceManger.getPreferenceManger();
             Intent intent = new Intent(ActivityPaymentOptions.this, PayMentGateWay.class);
-          intent.putExtra("FIRST_NAME", manger.getString(PrefKeys.USERNAME));
-           intent.putExtra("PHONE_NUMBER", manger.getString(PrefKeys.MOBILE));
+            intent.putExtra("FIRST_NAME", manger.getString(PrefKeys.USERNAME));
+            intent.putExtra("PHONE_NUMBER", manger.getString(PrefKeys.MOBILE));
             intent.putExtra("EMAIL_ADDRESS", manger.getString(PrefKeys.EMAIL));
             intent.putExtra("RECHARGE_AMT", String.valueOf(totalAmount));
             startActivity(intent);
@@ -150,6 +150,7 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
                             try {
                                 double v = Double.parseDouble(totalAmount);
                                 if (v > 0) {
+                                    Utility.showToast(ActivityPaymentOptions.this, response.getMessage());
                                     openPayment();
                                     finish();
                                 } else finish();

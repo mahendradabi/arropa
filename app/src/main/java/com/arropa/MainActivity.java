@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,8 @@ import com.arropa.adapters.ViewPagerAdapter;
 import com.arropa.customviews.CustPagerTransformer;
 import com.arropa.models.CartList;
 import com.arropa.models.CartModel;
+import com.arropa.models.Credit;
+import com.arropa.models.CreditModels;
 import com.arropa.models.MyResponse;
 import com.arropa.models.PictureModel;
 import com.arropa.models.ProfileImgModel;
@@ -92,6 +95,8 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         tabs = findViewById(R.id.tabs);
         viewpager = findViewById(R.id.viewpager);
 
+        Log.d("myid",preferenceManger.getString(PrefKeys.USERID));
+
         View view = navigationView.getHeaderView(0);
         AppCompatTextView userName = view.findViewById(R.id.username);
         img_user_profile = view.findViewById(R.id.img_user_profile);
@@ -104,7 +109,6 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
                 findItem(R.id.useLimit));
         tvRemainingLimit = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.reamingLimit));
-
 
 
         if (tvCreditLimt != null) {
@@ -141,7 +145,13 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
         getCartSize();
         getProfileImage();
+        getCreditLimits();
 
+    }
+
+    private void getCreditLimits() {
+        new Requestor(Constant.CREDITLIMIT, this)
+                .getCreditDetails();
     }
 
     private void getProfileImage() {
@@ -301,8 +311,6 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         tvRemainingLimit.setText(Constant.CURRENCY + " " + "6000");
 
 
-
-
     }
 
     private void hideShowLimit(TextView tv) {
@@ -353,7 +361,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         if (dialog != null) dialog.show();
         new Requestor(Constant.UPLOAD_PROFILE_PHOTO, MainActivity.this)
                 .uloadPhoto(getRequestBody(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID)),
-                        prepareFilePart("picture", new File(path)));
+                        prepareFilePart("userfile", new File(path)));
 
     }
 
@@ -415,6 +423,19 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
                 }
                 break;
+
+            case Constant.CREDITLIMIT:
+                CreditModels creditModels = (CreditModels) o;
+                if (creditModels != null && creditModels.status == true) {
+                    Credit details = creditModels.getDetails();
+                    if (details != null) {
+                        tvCreditLimt.setText(details.getCreaditAmount());
+                        tvUserLimit.setText(details.getCreaditUse());
+                        tvRemainingLimit.setText(details.getCstatus());
+                    }
+
+                }
+                break;
         }
 
     }
@@ -422,6 +443,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
     @Override
     public void error(Object o, int code) {
         if (dialog != null && dialog.isShowing()) dialog.dismiss();
+        Utility.showToast(MainActivity.this,o.toString());
     }
 
     @Override
