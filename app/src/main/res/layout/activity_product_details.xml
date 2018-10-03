@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -27,17 +27,11 @@
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:visibility="gone"
-                    android:id="@+id/post_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/shirt" />
+
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"/>
+                    android:layout_height="200dp"/>
                 <com.arropa.customviews.MyPageIndicator
                     android:id="@+id/piv"
                     android:layout_width="match_parent"
@@ -77,6 +71,14 @@
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                 </LinearLayout>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\u20b9 2500"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -194,15 +196,10 @@
                     android:text="Regular fit, full sleeve"
                     android:textColor="@color/black" />
 
-                <WebView
-                    android:visibility="gone"
-                    android:id="@+id/webView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></WebView>
 
 
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
         <LinearLayout
             android:id="@+id/ll_bottom"

@@ -29,18 +29,17 @@ public class ReadPrivacy extends MyAbstractActivity {
         showBackButton();
         webView = findViewById(R.id.webView);
 
-        switch (getIntent().getIntExtra("url",0))
-        {
+        switch (getIntent().getIntExtra("url", 0)) {
             case 1:
-                webView.loadUrl("http://disharajsociety.com/arropa/term.html");
+                webView.loadUrl(Constant.HOST_URL + Constant.PATH + "term.html");
                 setTitle("Terms & Conditons");
                 break;
             case 2:
-                webView.loadUrl("http://disharajsociety.com/arropa/faq.html");
+                webView.loadUrl(Constant.HOST_URL + Constant.PATH + "faq.html");
                 setTitle("FAQ");
                 break;
             case 3:
-                webView.loadUrl("http://disharajsociety.com/arropa/return.html");
+                webView.loadUrl(Constant.HOST_URL + Constant.PATH + "return.html");
                 setTitle("Return");
                 break;
         }

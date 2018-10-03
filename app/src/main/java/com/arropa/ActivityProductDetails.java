@@ -45,9 +45,9 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
     AppCompatTextView tvPriceDiscount;
     @BindView(R.id.producttvDes)
     AppCompatTextView tvDesc;
+    @BindView(R.id.tv_discount)
+    AppCompatTextView tv_discount;
 
-    @BindView(R.id.post_img)
-    AppCompatImageView imageView;
 
     @BindView(R.id.btnBuyNow)
     AppCompatButton buyNow;
@@ -57,8 +57,7 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
 
     boolean isBuyNowClicked;
 
-    @BindView(R.id.webView)
-    WebView webView;
+
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
@@ -94,8 +93,15 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
                 tvName.setText(productModel.getProductName());
                 tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-                tvPriceDiscount.setText(Constant.CURRENCY+" "+productModel.getDiscount_price());
-
+                try {
+                    int i = Integer.parseInt(productModel.getProductPrice());
+                    int i1 = Integer.parseInt(productModel.getDiscount_price());
+                    int i2 = i - i1;
+                    tvPriceDiscount.setText(Constant.CURRENCY + " " + i2);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                tv_discount.setText("Discount "+Constant.CURRENCY + " " + productModel.getDiscount_price());
 
                 tvDesc.setText(Html.fromHtml(productModel.getProductDesc()));
              //   webView.loadData(productModel.getProductDesc(),"text/html","UTF-8");
@@ -107,11 +113,6 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
                     {
                         String[] split = img.split(",");
                         if (split!=null&&split.length>0) {
-                            Picasso.get()
-                                    .load(Constant.IMAGEPATH + split[0])
-                                    .placeholder(R.drawable.shirt)
-                                    .error(R.drawable.shirt)
-                                    .into(imageView);
                             viewPagerAdapter = new SliderPagerAdapter(ActivityProductDetails.this,split);
                             piv.setIndicator(viewPagerAdapter.getCount());
                             viewPager.addOnPageChangeListener(this);

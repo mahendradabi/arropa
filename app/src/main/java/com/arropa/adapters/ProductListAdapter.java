@@ -33,7 +33,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     public ProductListAdapter(Context mContex, List<ProductModel> list) {
         this.mContex = mContex;
-        this.list=list;
+        this.list = list;
     }
 
     @NonNull
@@ -48,11 +48,19 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         ProductModel productModel = list.get(position);
 
-        holder.tvPrice.setText(Constant.CURRENCY+" "+productModel.getProductPrice());
+        holder.tvPrice.setText(Constant.CURRENCY + " " + productModel.getProductPrice());
         holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        holder.tvDiscountPrice.setText(Constant.CURRENCY+" "+productModel.getDiscount_price());
-       // holder.tvDiscountPrice.setPaintFlags(holder.tvDiscountPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        try {
+            int i = Integer.parseInt(productModel.getProductPrice());
+            int i1 = Integer.parseInt(productModel.getDiscount_price());
+            int i2 = i - i1;
+            holder.tvDiscountPrice.setText(Constant.CURRENCY + " " + i2);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        holder.tv_discount.setText("Discount "+Constant.CURRENCY + " " + productModel.getDiscount_price());
+        // holder.tvDiscountPrice.setPaintFlags(holder.tvDiscountPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
 
         holder.tvName.setText(productModel.getProductName());
@@ -61,29 +69,27 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            mContex.startActivity(new Intent(mContex, ActivityProductDetails.class)
-            .putExtra("product",list.get(position))
-            );
+                mContex.startActivity(new Intent(mContex, ActivityProductDetails.class)
+                        .putExtra("product", list.get(position))
+                );
             }
         });
 
         try {
             String img = productModel.getImages();
-            if (img!=null)
+            if (img != null)
 
             {
                 String[] split = img.split(",");
-                if (split!=null&&split.length>0)
+                if (split != null && split.length > 0)
                     Picasso.get()
-                            .load(Constant.IMAGEPATH+split[0])
+                            .load(Constant.IMAGEPATH + split[0])
                             .placeholder(R.drawable.shirt)
                             .error(R.drawable.shirt)
                             .into(holder.imageView);
             }
 
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -98,16 +104,17 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout ll_item;
         AppCompatImageView imageView;
-        AppCompatTextView tvName,tvPrice,tvDes,tvDiscountPrice;
+        AppCompatTextView tvName, tvPrice, tvDes, tvDiscountPrice, tv_discount;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             ll_item = itemView.findViewById(R.id.ll_item);
-            tvName=itemView.findViewById(R.id.tvname);
-            tvPrice=itemView.findViewById(R.id.tvPrice);
-            tvDiscountPrice=itemView.findViewById(R.id.tvPriceDiscount);
-            tvDes=itemView.findViewById(R.id.tvDes);
-            imageView=itemView.findViewById(R.id.post_img);
+            tvName = itemView.findViewById(R.id.tvname);
+            tvPrice = itemView.findViewById(R.id.tvPrice);
+            tvDiscountPrice = itemView.findViewById(R.id.tvPriceDiscount);
+            tv_discount = itemView.findViewById(R.id.tv_discount);
+            tvDes = itemView.findViewById(R.id.tvDes);
+            imageView = itemView.findViewById(R.id.post_img);
         }
     }
 }
