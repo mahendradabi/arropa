@@ -41,8 +41,24 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
             holder.p_qty.setText("Qty: "+orderModel.getAlotNo());
             holder.p_title.setText(orderModel.getProductName());
         }
-        Picasso.get().load(Constant.IMAGEPATH+orderModel.getImages())
-                .into(holder.image);
+
+
+        try {
+            String img = orderModel.getImages();
+            if (img != null) {
+                String[] split = img.split(",");
+                if (split != null && split.length > 0) {
+                    Picasso.get().load(Constant.IMAGEPATH + split[0])
+                            .error(R.drawable.shirt)
+                            .placeholder(R.drawable.shirt)
+                            .into(holder.image);
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
 
     }
 

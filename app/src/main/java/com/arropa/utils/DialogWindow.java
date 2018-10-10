@@ -73,7 +73,11 @@ public class DialogWindow {
                         }
                     });
                 }
-                else  Utility.showToast(context,"Email not valid.");
+                else  {
+                    Utility.showToast(context,"Please enter your registered email id");
+                    showForgotDialog(context).show();
+
+                }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

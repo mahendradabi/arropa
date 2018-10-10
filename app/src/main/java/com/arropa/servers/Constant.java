@@ -17,4 +17,6 @@ public final class Constant implements ServerCode {
 
     public static final String CURRENCY="\u20b9";
 
+    public static final String PRIVACYPATH=HOST_URL+"arropa/";
+
 }

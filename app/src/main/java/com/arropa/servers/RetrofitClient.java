@@ -17,13 +17,13 @@ public class RetrofitClient {
 
     public static Retrofit getMyClient() {
         if (retrofit == null) {
-            OkHttpClient httpClient = new OkHttpClient.Builder()
+           /*      OkHttpClient httpClient = new OkHttpClient.Builder()
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .readTimeout(60,TimeUnit.SECONDS)
                     .writeTimeout(60,TimeUnit.SECONDS)
                     .build();
 
-   /*         httpClient.addInterceptor(new Interceptor() {
+       httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request().newBuilder().addHeader("Authorization", "$2y$08$8dS/O4m9PF2f6pe4uaHE6eCMQnqxxF6gnIu4RxV3l.JlwUKeqEbf6").build();
@@ -33,7 +33,6 @@ public class RetrofitClient {
             retrofit = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(Constant.HOST_URL)
-                    .client(httpClient)
                     .build();
         }
         return retrofit;

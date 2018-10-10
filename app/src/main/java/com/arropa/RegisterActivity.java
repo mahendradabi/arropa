@@ -113,6 +113,9 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
                     } else if (etPassword.getText().length() < 8) {
                         etPassword.setError("Password minimum 8 charcter required");
                         etPassword.requestFocus();
+                    } else if (etPincode.getText().toString().length() != 6) {
+                        etPincode.setError("Pincode must be in six digit");
+                        etPincode.requestFocus();
                     } else {
                         progressDialog.show();
                         new Requestor(Constant.REGISTER_CODE, RegisterActivity.this)
@@ -128,21 +131,21 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
             }
         });
 
-        new Requestor(Constant.STATE_LIST,RegisterActivity.this)
+        new Requestor(Constant.STATE_LIST, RegisterActivity.this)
                 .getStates();
 
         city.add("Select City");
         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, city);
         etCity.setAdapter(arrayAdapter);
         state.add("Select State");
-       ArrayAdapter  stateAdpter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, state);
+        ArrayAdapter stateAdpter = new ArrayAdapter<String>(this, R.layout.item_spinner_textview, state);
         etState.setAdapter(stateAdpter);
 
         etState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position>0)
-                    new Requestor(Constant.CITY_LIST,RegisterActivity.this)
+                if (position > 0)
+                    new Requestor(Constant.CITY_LIST, RegisterActivity.this)
                             .getCity(stateid.get(position));
             }
 
@@ -194,7 +197,7 @@ public class RegisterActivity extends AppCompatActivity implements ServerRespons
             case Constant.CITY_LIST:
                 CityList cityList = (CityList) o;
 
-                if (cityList != null&&cityList.getCitydetail()!=null) {
+                if (cityList != null && cityList.getCitydetail() != null) {
                     city.clear();
                     city.add("Select City");
                     for (Citydetail citydetail : cityList.getCitydetail()) {

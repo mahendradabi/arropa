@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.arropa.ActivityProductDetails;
 import com.arropa.R;
 import com.arropa.models.CartList;
 import com.arropa.models.CartModel;
@@ -48,7 +49,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                         notifyItemRangeChanged(removedPosition, list.size());
                         if (list.size() == 0)
                             onCartEmpty.onCartEmpty();
-                        else                         onCartEmpty.onCartItemRemoved();
+                        else onCartEmpty.onCartItemRemoved();
 
 
                     }
@@ -74,7 +75,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                                     notifyItemRemoved(removedPosition);
                                     notifyItemRangeChanged(removedPosition, list.size());
 
-                                    if (list.size()==0)
+                                    if (list.size() == 0)
                                         onCartEmpty.onCartEmpty();
                                 }
 
@@ -100,7 +101,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     public interface OnCartEmpty {
         void onCartEmpty();
+
         void onTotalChanged(String total);
+
         void onCartItemRemoved();
     }
 
@@ -129,11 +132,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         holder.tvqty.setText(model.getQty());
         holder.pname.setText(model.getProductName());
         holder.tvPrice.setText(Constant.CURRENCY + model.getAmount());
-
+/*
         Picasso.get().load(Constant.IMAGEPATH + model.getImages())
                 .error(R.drawable.shirt)
                 .placeholder(R.drawable.shirt)
-                .into(holder.imageView);
+                .into(holder.imageView);*/
+
+        try {
+            String img = model.getImages();
+            if (img != null) {
+                String[] split = img.split(",");
+                if (split != null && split.length > 0) {
+                    Picasso.get().load(Constant.IMAGEPATH + split[0])
+                            .error(R.drawable.shirt)
+                            .placeholder(R.drawable.shirt)
+                            .into(holder.imageView);
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
 
         holder.plus.setOnClickListener(new View.OnClickListener() {
             @Override

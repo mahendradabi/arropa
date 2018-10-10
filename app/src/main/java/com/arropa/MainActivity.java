@@ -139,12 +139,13 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         img_user_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imgePicker();
+              //  imgePicker();
             }
         });
 
+
         getCartSize();
-        getProfileImage();
+      //  getProfileImage();
         getCreditLimits();
 
     }
@@ -238,19 +239,27 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
                 break;
             case R.id.termsConditions:
-                startActivity(new Intent(MainActivity.this, ReadPrivacy.class).putExtra("url", 1));
+                Intent intent=new Intent(MainActivity.this,ReadPrivacy.class);
+                intent.putExtra("url",1);
+                startActivity(intent);
+//                startActivity(new Intent(MainActivity.this, ReadPrivacy.class).putExtra("url", 1));
                 mDrawerLayout.closeDrawer(Gravity.START);
 
                 break;
 
             case R.id.faq:
-                startActivity(new Intent(MainActivity.this, ReadPrivacy.class).putExtra("url", 2));
+                Intent intent1=new Intent(MainActivity.this,ReadPrivacy.class);
+                intent1.putExtra("url",2);
+                startActivity(intent1);
                 mDrawerLayout.closeDrawer(Gravity.START);
 
                 break;
 
             case R.id.retrunt:
-                startActivity(new Intent(MainActivity.this, ReadPrivacy.class).putExtra("url", 3));
+                Intent intent2=new Intent(MainActivity.this,ReadPrivacy.class);
+                intent2.putExtra("url",3);
+                startActivity(intent2);
+              //  startActivity(new Intent(MainActivity.this, ReadPrivacy.class).putExtra("url", 3));
                 mDrawerLayout.closeDrawer(Gravity.START);
 
                 break;
@@ -336,20 +345,9 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
         if (requestCode == Config.RC_PICK_IMAGES && resultCode == RESULT_OK && data != null) {
             ArrayList<Image> images = data.getParcelableArrayListExtra(Config.EXTRA_IMAGES);
             if (images != null && images.size() > 0) {
-
                 File img = new File(images.get(0).getPath());
-                if (img.exists()) {
-                    img_user_profile.setImageURI(Uri.fromFile(img));
-                    uploadPhotos(images.get(0).getPath());
-                } else {
-                  /*  String path= Environment.getExternalStorageDirectory().getPath();
-                    img=new File(path+"/Pictures/Buahh/" + images.get(0).getName());
-                    if (img.exists())
-                        uploadPhotos(images.get(0).getName());
-                    else Toast.makeText(getApplicationContext(),"Internal Error",Toast.LENGTH_SHORT).show();*/
-
-
-                }
+                Picasso.get().load(img).into(img_user_profile);
+               uploadPhotos(img);
 
             }
 
@@ -357,11 +355,12 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
 
     }
 
-    private void uploadPhotos(String path) {
-        if (dialog != null) dialog.show();
+    private void uploadPhotos(File file) {
+        if (dialog != null)
+            dialog.show();
         new Requestor(Constant.UPLOAD_PROFILE_PHOTO, MainActivity.this)
                 .uloadPhoto(getRequestBody(PreferenceManger.getPreferenceManger().getString(PrefKeys.USERID)),
-                        prepareFilePart("userfile", new File(path)));
+                        prepareFilePart("userfile", file));
 
     }
 
@@ -450,5 +449,6 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
     protected void onResume() {
         super.onResume();
         getCartSize();
+        getCreditLimits();
     }
 }

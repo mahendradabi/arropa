@@ -11,10 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.arropa.models.CartList;
 import com.arropa.models.CartModel;
+import com.arropa.models.Credit;
+import com.arropa.models.CreditModels;
 import com.arropa.models.MyResponse;
 import com.arropa.models.PayAmountModel;
 import com.arropa.models.PayModel;
@@ -43,6 +46,9 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
     CheckBox paytmWallet;
     @BindView(R.id.total)
     TextView tvTotal;
+
+    @BindView(R.id.ll_payment)
+    LinearLayout ll_payment;
 
     @BindView(R.id.tv_total_pay)
     AppCompatTextView totalPay;
@@ -77,7 +83,13 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
         dialog.show();
 
         getCartSize();
+        getCreditLimits();
 
+    }
+
+    private void getCreditLimits() {
+        new Requestor(Constant.CREDITLIMIT, this)
+                .getCreditDetails();
     }
 
     @Override
@@ -103,7 +115,9 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
         confirmPyament.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (payMoney.isChecked()) {
+                if (totalAmount != null && totalAmount.equals("0")) {
+                    placeOrder();
+                } else if (payMoney.isChecked()) {
                     placeOrder();
                 } else if (paytmWallet.isChecked())
                     Utility.showToast(ActivityPaymentOptions.this, "Paytm wallet not supported yet.");
@@ -171,20 +185,31 @@ public class ActivityPaymentOptions extends MyAbstractActivity implements Server
                     PayModel details = model.getDetails();
                     if (details != null) {
                         confirmPyament.setEnabled(true);
-                        totalcredit.setText(Constant.CURRENCY + " " + details.getTotalCreaditamount());
+                        // totalcredit.setText(Constant.CURRENCY + " " + details.getTotalCreaditamount());
                         totalOrder.setText(Constant.CURRENCY + " " + details.getTotalOrderttlamount());
                         totalPay.setText(Constant.CURRENCY + " " + details.getTotalPayamount());
                         tvTotal.setText(Constant.CURRENCY + " " + details.getTotalPayamount());
                         totalAmount = String.valueOf(details.getTotalPayamount());
+                        if (totalAmount.equals("0"))
+                            confirmPyament.setText("Confirm Order");
+                        else ll_payment.setVisibility(View.VISIBLE);
                     }
                 }
 
-              /*  CartList cartList = (CartList) o;
-                if (cartList != null && cartList.isStatus()) {
-                    totalAmount = cartList.getTotal();
-                    tvTotal.setText(Constant.CURRENCY+" "+totalAmount);
+                break;
 
-                }*/
+
+            case Constant.CREDITLIMIT:
+                CreditModels creditModels = (CreditModels) o;
+                if (creditModels != null && creditModels.status == true) {
+                    Credit details = creditModels.getDetails();
+                    if (details != null) {
+                        //  totalcredit.setText(details.getCreaditAmount());
+                        //   tvUserLimit.setText(details.getCreaditUse());
+                        totalcredit.setText(details.getCstatus());
+                    }
+
+                }
                 break;
 
         }

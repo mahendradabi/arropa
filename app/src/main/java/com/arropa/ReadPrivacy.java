@@ -31,15 +31,15 @@ public class ReadPrivacy extends MyAbstractActivity {
 
         switch (getIntent().getIntExtra("url", 0)) {
             case 1:
-                webView.loadUrl(Constant.HOST_URL + Constant.PATH + "term.html");
+                webView.loadUrl(Constant.PRIVACYPATH+ "term.html");
                 setTitle("Terms & Conditons");
                 break;
             case 2:
-                webView.loadUrl(Constant.HOST_URL + Constant.PATH + "faq.html");
+                webView.loadUrl(Constant.PRIVACYPATH + "faq.html");
                 setTitle("FAQ");
                 break;
             case 3:
-                webView.loadUrl(Constant.HOST_URL + Constant.PATH + "return.html");
+                webView.loadUrl(Constant.PRIVACYPATH+ "return.html");
                 setTitle("Return");
                 break;
         }

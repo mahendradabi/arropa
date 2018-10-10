@@ -65,10 +65,21 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
         holder.tvName.setText(productModel.getProductName());
         holder.tvDes.setText(productModel.getProductDesc());
 
-        Picasso.get().load(Constant.IMAGEPATH+productModel.getImages())
-                .error(R.drawable.shirt)
-                .placeholder(R.drawable.shirt)
-                .into(holder.imageView);
+        try {
+            String img = productModel.getImages();
+            if (img != null) {
+                String[] split = img.split(",");
+                if (split != null && split.length > 0) {
+                    Picasso.get().load(Constant.IMAGEPATH + split[0])
+                            .error(R.drawable.shirt)
+                            .placeholder(R.drawable.shirt)
+                            .into(holder.imageView);
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
