@@ -92,7 +92,7 @@ public class ActivityProductDetails extends MyAbstractActivity implements Server
                 id = productModel.getProdId();
                 tvName.setText(productModel.getProductName());
                 tvPrice.setPaintFlags(tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
+                tvPrice.setText(productModel.getProductPrice());
                 try {
                     int i = Integer.parseInt(productModel.getProductPrice());
                     int i1 = Integer.parseInt(productModel.getDiscount_price());

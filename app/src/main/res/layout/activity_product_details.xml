@@ -59,7 +59,7 @@
                         android:id="@+id/producttvPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="\u20b9 2500"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                     <android.support.v7.widget.AppCompatTextView
@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_height="wrap_content"
-                        android:text="\u20b9 2500"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -76,7 +76,7 @@
                     android:id="@+id/tv_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="\u20b9 2500"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
 

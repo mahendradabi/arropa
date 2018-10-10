@@ -392,7 +392,7 @@ public class MainActivity extends MyAbstractActivity implements TabLayout.OnTabS
                 CartList cartList = (CartList) o;
                 if (cartList != null && cartList.isStatus()) {
                     List<CartModel> details = cartList.getDetails();
-                    if (details != null) {
+                    if (tvCartCount!=null&&details != null) {
                         tvCartCount.setText(details.size() + "");
 
                     }
